@@ -1,0 +1,2 @@
+- what do you think about putting all people in one table (people) and using users table for breeze
+- if you disagree, what is your solution?
