@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Person;
@@ -38,6 +39,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/cart', [ProductController::class, 'cart'])->name('product.cart');
+    Route::get('/add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('product.addtocart');
 });
 
 // management routes protected by the role middleware for management and the admin user
