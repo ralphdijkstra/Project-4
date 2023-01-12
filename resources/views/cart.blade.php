@@ -1,3 +1,6 @@
+@extends('layouts.dashboard')
+
+@section('content')
 <table id="cart" class="table table-hover table-condensed">
     <thead>
         <tr>
@@ -48,10 +51,11 @@
     </tbody>
     <tfoot>
         <tr>
-            <td><a href="{{ route('dashboard') }} " class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue
+            <td><a href="{{ route('dashboard') }} " class="btn"><i class="fa fa-angle-left"></i> Continue
                     Shopping</a></td>
             <td colspan="2" class="hidden-xs"></td>
             <td class="hidden-xs text-center"><strong>Total €{{ $total }}</strong></td>
         </tr>
     </tfoot>
 </table>
+@endsection
