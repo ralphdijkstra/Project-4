@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Product;
 use Illuminate\View\Component;
 
 class ProductList extends Component
@@ -15,7 +16,8 @@ class ProductList extends Component
      */
     public function __construct()
     {
-        $this->products = ['salami pizza', 'hawai pizza', 'margarita pizza'];
+        // $this->products = ['salami pizza', 'hawai pizza', 'margarita pizza'];
+        $this->products = Product::all();
     }
 
     /**
