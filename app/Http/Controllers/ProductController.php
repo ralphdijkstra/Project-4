@@ -85,6 +85,7 @@ class ProductController extends Controller
 
     public function cart()
     {
+        // dd(session('cart'));
         return view('cart');
     }
 

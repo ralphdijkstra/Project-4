@@ -12,17 +12,29 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('menu')" :active="request()->routeIs('menu')">
+                        {{ __('Menu') }}
                     </x-nav-link>
-                    @canany(['manage activiteiten', 'admin'])
+                    <x-nav-link :href="route('order')" :active="request()->routeIs('order')">
+                        {{ __('Order') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
+                        {{ __('Shopping Cart') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('menu')" :active="request()->routeIs('contact')">
+                        {{ __('Contact') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('menu')" :active="request()->routeIs('aboutus')">
+                        {{ __('About Us') }}
+                    </x-nav-link>
+                    {{-- @canany(['manage activiteiten', 'admin'])
                         <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                             {{ __('Users (geregistreerde gebruikers)') }}
                         </x-nav-link>
                         <x-nav-link :href="route('persons.index')" :active="request()->routeIs('persons.index')">
                             {{ __('Personen') }}
                         </x-nav-link>
-                    @endcanany
+                    @endcanany --}}
                 </div>
             </div>
 
@@ -75,8 +87,8 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('menu')" :active="request()->routeIs('menu')">
+                {{ __('menu') }}
             </x-responsive-nav-link>
         </div>
 
