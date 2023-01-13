@@ -117,7 +117,6 @@ class ProductController extends Controller
             "name" => $product->name,
             "quantity" => 1,
             "price" => $product->price,
-            "photo" => $product->photo
         ];
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product added to cart successfully!');
@@ -128,8 +127,7 @@ class ProductController extends Controller
         $cart = session()->get('cart');
         $cart[$request->id]["quantity"] = $request->quantity;
         session()->put('cart', $cart);
-        session()->flash('success', 'Cart updated successfully');
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Product updated from cart successfully!');
     }
 
     public function remove(Request $request)
@@ -139,7 +137,6 @@ class ProductController extends Controller
             unset($cart[$request->id]);
             session()->put('cart', $cart);
         }
-        session()->flash('success', 'Product removed successfully');
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Product removed from cart successfully!');
     }
 }
