@@ -1,63 +1,53 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<table id="cart" class="table table-hover table-condensed">
-    <thead>
-        <tr>
-            <th style="width:50%">Product</th>
-            <th style="width:10%">Price</th>
-            <th style="width:8%">Quantity</th>
-            <th style="width:22%" class="text-center">Subtotal</th>
-            <th style="width:10%"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php $total = 0; ?>
-        {{Session::get('success')}}
-        
+    <?php $total = 0; ?>
+    @if (session()->has('success'))
+        <div class="m-1 p-3 text-green-500 bg-green-200 rounded-md">
+            {{ Session::get('success') }}
+        </div>
+    @endif
+    <div class="p-5 grid grid-cols-5">
+        {{-- Headers --}}
+        <div class="font-bold h-12">Product</div>
+        <div class="font-bold">Price</div>
+        <div class="font-bold">Quantity</div>
+        <div class="font-bold">Subtotal</div>
+        <div></div>
+        {{-- End of Headers --}}
+
         @if (session('cart'))
             @foreach (session('cart') as $id => $details)
                 <?php $total += $details['price'] * $details['quantity']; ?>
-                <tr>
-                    <td data-th="Product">
-                        <div class="row">
-                            {{-- <div class="col-sm-3 hidden-xs"><img src="{{ $details['photo'] }}" width="100" height="100" class="img-responsive"/></div> --}}
-                            <div class="col-sm-9">
-                                <h4 class="nomargin">{{ $details['name'] }}</h4>
-                            </div>
-                        </div>
-                    </td>
-                    <td data-th="Price">€{{ $details['price'] }}</td>
-                    <td data-th="Quantity">
-                        <form method="POST" action="{{ route('product.refresh') }}">
-                            @csrf
-                            @method('patch')
-                            <input type="hidden" name="id" value="{{ $id }}">
-                            <input type="number" name="quantity" value="{{ $details['quantity'] }}" />
-                    </td>
-                    <td data-th="Subtotal" class="text-center">€{{ $details['price'] * $details['quantity'] }}</td>
-                    <td class="actions" data-th="">
-                        <input type="submit" value="Refresh" />
-                        </form>
-                        <form method="POST" action="{{ route('product.remove') }}">
-                            @csrf
-                            @method('delete')
-                            <input type="hidden" name="id" value="{{ $id }}">
-                            <input type="hidden" name="quantity" value="{{ $details['quantity'] }} ">
-                            <input type="submit" value="Delete" />
-                        </form>
-                    </td>
-                </tr>
+                <div class="h-12">{{ $details['name'] }}</div>
+                <div>€ {{ $details['price'] }}</div>
+                <div>
+                    <form method="POST" action="{{ route('product.refresh') }}">
+                        @csrf
+                        @method('patch')
+                        <input type="hidden" name="id" value="{{ $id }}">
+                        <input class="w-24" type="number" name="quantity" value="{{ $details['quantity'] }}" />
+                        <input type="submit" class="btn" value="Refresh" />
+                    </form>
+                </div>
+                <div>€ {{ $details['price'] * $details['quantity'] }}</div>
+                <div>
+                    <form method="POST" action="{{ route('product.remove') }}">
+                        @csrf
+                        @method('delete')
+                        <input type="hidden" name="id" value="{{ $id }}">
+                        <input type="hidden" name="quantity" value="{{ $details['quantity'] }} ">
+                        <input type="submit" class="btn btn-warning" value="Delete" />
+                    </form>
+                </div>
             @endforeach
+            <div class="col-span-3"></div>
+            <div class="font-bold">
+                Total € {{ $total }}
+            </div>
+            <div>
+                <a class="btn btn-warning">Delete All</a>
+            </div>
         @endif
-    </tbody>
-    <tfoot>
-        <tr>
-            <td><a href="{{ route('dashboard') }} " class="btn"><i class="fa fa-angle-left"></i> Continue
-                    Shopping</a></td>
-            <td colspan="2" class="hidden-xs"></td>
-            <td class="hidden-xs text-center"><strong>Total €{{ $total }}</strong></td>
-        </tr>
-    </tfoot>
-</table>
+    </div>
 @endsection
