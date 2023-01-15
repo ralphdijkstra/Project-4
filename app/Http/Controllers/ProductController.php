@@ -91,14 +91,17 @@ class ProductController extends Controller
 
     public function addToCart($id, Request $request)
     {
-
         $product = Product::find($id);
 
         $cart = session()->get('cart');
 
+        $c = count($cart) + 1;
+
+        $x = 1;
+
         if (!$cart) {
             $cart = [
-                $id => [
+                $c => [
                     "name" => $product->name,
                     "quantity" => 1,
                     "price" => $product->price,
@@ -109,16 +112,17 @@ class ProductController extends Controller
             return redirect()->back()->with('success', 'Product added to cart successfully!');
         }
 
-        // if cart not empty then check if this product exist then increment quantity
-        if (isset($cart[$id])) {
-            if ($cart[$id]['size'] == $request->size) {
-                $cart[$id]['quantity']++;
-                session()->put('cart', $cart);
-                return redirect()->back()->with('success', 'Product added to cart successfully!');
+        foreach (session('cart') as $key => $value) {
+            if ($value['name'] === $product->name) {
+                if ($value['size'] === $request->size) {
+                    $cart[$x]['quantity']++;
+                    session()->put('cart', $cart);
+                    return redirect()->back()->with('success', 'Product added to cart successfully!');
+                }
             }
+            $x++;
         }
-        // if item not exist in cart then add to cart with quantity = 1
-        $cart[$id] = [
+        $cart[$c] = [
             "name" => $product->name,
             "quantity" => 1,
             "price" => $product->price,
