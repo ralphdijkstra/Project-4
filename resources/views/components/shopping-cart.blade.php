@@ -1,10 +1,11 @@
 <div>
     <?php $total = 0; ?>
-    <div class="p-5 grid grid-cols-5">
+    <div class="p-5 grid grid-cols-6">
         {{-- Headers --}}
         <div class="font-bold h-12">Product</div>
         <div class="font-bold">Price</div>
         <div class="font-bold">Quantity</div>
+        <div class="font-bold">Size</div>
         <div class="font-bold">Subtotal</div>
         <div></div>
         {{-- End of Headers --}}
@@ -19,10 +20,11 @@
                         @csrf
                         @method('patch')
                         <input type="hidden" name="id" value="{{ $id }}">
-                        <input class="w-24" type="number" name="quantity" value="{{ $details['quantity'] }}" />
+                        <input class="w-24" type="number" name="quantity" min="1" value="{{ $details['quantity'] }}" />
                         <input type="submit" class="btn" value="Update" />
                     </form>
                 </div>
+                <div>{{ $details['size'] }} cm</div>
                 <div>€ {{ $details['price'] * $details['quantity'] }}</div>
                 <div>
                     <form method="POST" action="{{ route('product.remove') }}">

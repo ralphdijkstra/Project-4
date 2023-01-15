@@ -16,12 +16,67 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('products')->insert([
-            'name' => 'Pizza Margarita',
-            'description' => 'Tomatensaus, kaas',
-            'image' => '',
-            'price' => '10',
-            'category_id' => '1',
-        ]);
+        $products = [
+            [
+                'name' => 'Pizza Margaritha',
+                'description' => 'Tomatensaus, mozzarella en pizzakruiden',
+                'image' => '',
+                'price' => '8',
+                'category_id' => '1',
+            ],
+            [
+                'name' => 'Pizza Salami',
+                'description' => 'Tomatensaus, mozzarella en salami',
+                'image' => '',
+                'price' => '10',
+                'category_id' => '1',
+            ],
+            [
+                'name' => 'Pizza Hawaii',
+                'description' => 'Tomatensaus, mozzarella, ham en ananas',
+                'image' => '',
+                'price' => '10',
+                'category_id' => '1',
+            ],
+            [
+                'name' => 'Pizza Funghi',
+                'description' => 'Tomatensaus, mozzarella en champignons',
+                'image' => '',
+                'price' => '10',
+                'category_id' => '1',
+            ],
+            [
+                'name' => 'Pizza Pepperoni',
+                'description' => 'Tomatensaus, mozzarella en pepperoni',
+                'image' => '',
+                'price' => '10',
+                'category_id' => '1',
+            ],
+            [
+                'name' => 'Pizza Caprese',
+                'description' => 'Tomatensaus, mozzarella, spinazie, tomaat en pesto',
+                'image' => '',
+                'price' => '12',
+                'category_id' => '1',
+            ],
+            [
+                'name' => 'Pizza Tonno',
+                'description' => 'Tomatensaus, mozzarella, rode ui en tonijn',
+                'image' => '',
+                'price' => '12',
+                'category_id' => '1',
+            ],
+            [
+                'name' => 'Pizza Four Cheese',
+                'description' => 'Tomatensaus, mozzarella, gouda, cheddar en franse kaas',
+                'image' => '',
+                'price' => '14',
+                'category_id' => '1',
+            ],
+        ];
+
+        foreach($products as $key => $value){
+            Product::create($value);
+        }
     }
 }
