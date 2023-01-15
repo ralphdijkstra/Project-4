@@ -134,8 +134,10 @@ class ProductController extends Controller
 
     public function refresh(Request $request)
     {
+        
         $cart = session()->get('cart');
         $cart[$request->id]["quantity"] = $request->quantity;
+        $cart[$request->id]["size"] = $request->size;
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product updated from cart successfully!');
     }
