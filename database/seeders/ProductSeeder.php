@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ProductSeeder extends Seeder
 {
@@ -15,6 +16,12 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::factory(500)->create()->unique();
+        DB::table('products')->insert([
+            'name' => 'Pizza Margarita',
+            'description' => 'Tomatensaus, kaas',
+            'image' => '',
+            'price' => '10',
+            'category_id' => '1',
+        ]);
     }
 }
