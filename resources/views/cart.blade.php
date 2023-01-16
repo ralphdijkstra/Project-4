@@ -2,4 +2,5 @@
 
 @section('content')
     <x-shopping-cart/>
+
 @endsection

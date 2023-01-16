@@ -85,7 +85,6 @@ class ProductController extends Controller
 
     public function cart()
     {
-        // dd(session('cart'));
         return view('cart');
     }
 
@@ -95,13 +94,13 @@ class ProductController extends Controller
 
         $cart = session()->get('cart');
 
-        $c = count($cart) + 1;
 
         $x = 1;
 
         if (!$cart) {
             $cart = [
-                $c => [
+                1 => [
+                    "id" => $product->id,
                     "name" => $product->name,
                     "quantity" => 1,
                     "price" => $product->price,
@@ -111,6 +110,8 @@ class ProductController extends Controller
             session()->put('cart', $cart);
             return redirect()->back()->with('success', 'Product added to cart successfully!');
         }
+
+        $c = count($cart) + 1;
 
         foreach (session('cart') as $key => $value) {
             if ($value['name'] === $product->name) {
@@ -123,6 +124,7 @@ class ProductController extends Controller
             $x++;
         }
         $cart[$c] = [
+            "id" => $product->id,
             "name" => $product->name,
             "quantity" => 1,
             "price" => $product->price,

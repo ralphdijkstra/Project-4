@@ -17,16 +17,23 @@
                 <div>
                     @switch($details['size'])
                         @case(25)
-                            € {{ number_format(($details['price'] - 1.5), 2)}}
+                            <?php $price = $details['price'] - 1.5; ?>
+                            € {{ number_format($price, 2) }}
                         @break
+
                         @case(29)
-                            € {{ number_format($details['price'], 2) }}
+                            <?php $price = $details['price']; ?>
+                            € {{ number_format($price, 2) }}
                         @break
+
                         @case(35)
-                            € {{ number_format(($details['price'] + 1.5), 2) }}
+                            <?php $price = $details['price'] + 1.5; ?>
+                            € {{ number_format($price, 2) }}
                         @break
+
                         @case(40)
-                            € {{ number_format(($details['price'] + 3), 2) }}
+                            <?php $price = $details['price'] + 3; ?>
+                            € {{ number_format($price, 2) }}
                         @break
 
                         @default
@@ -51,7 +58,7 @@
                         <option value="40" @if ($details['size'] == 40) selected @endif>40 cm XXL</option>
                     </select>
                 </div>
-                <div>€ {{ $details['price'] * $details['quantity'] }}</div>
+                <div>€ {{ number_format($price * $details['quantity'], 2) }}</div>
                 <div>
                     <input type="submit" class="btn" value="Update" />
                     </form>
@@ -70,7 +77,12 @@
             </div>
             <div>
                 <a class="btn btn-warning">Delete All</a>
+                <form action="{{ route('orders.store') }}" method="POST">
+                    @csrf
+                    <input class="btn" type="submit" value="Place order">
+                </form>
             </div>
         @endif
     </div>
+    {{ Auth::user()->id }}
 </div>
