@@ -57,6 +57,8 @@ Route::controller(OrderController::class)->group(function () {
     Route::post('/orders', 'store')->name('orders.store');
 });
 
+Route::resource('products', ProductController::class);
+
 // management routes protected by the role middleware for management and the admin user
 Route::middleware(['role:management|admin'])->group(function () {
     Route::resource('persons', PersonController::class);
