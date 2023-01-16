@@ -45,12 +45,14 @@ class OrderController extends Controller
 
         foreach (session('cart') as $key => $value) {
             $orderitem = new OrderItem();
-            $orderitem->order_id = 1;
+            $orderitem->order_id = $order->id;
             $orderitem->product_id = $value['id'];
             $orderitem->size = $value['size'];
             $orderitem->quantity = $value['quantity'];
             $orderitem->save();
         }
+
+        session()->forget('cart');
 
         return redirect()->back();
     }
