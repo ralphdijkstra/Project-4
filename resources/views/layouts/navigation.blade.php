@@ -15,7 +15,7 @@
                     <x-nav-link :href="route('menu')" :active="request()->routeIs('menu')">
                         {{ __('Menu') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('order')" :active="request()->routeIs('order')">
+                    <x-nav-link :href="route('orders.create')" :active="request()->routeIs('orders.create')">
                         {{ __('Order') }}
                     </x-nav-link>
                     <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
@@ -56,6 +56,9 @@
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('orders.index')">
+                            {{ __('Orders') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->

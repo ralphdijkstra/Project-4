@@ -16,7 +16,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        dd('index');
+        $user = Auth::user()->id;
+        $orders = Order::where('user_id', $user)->get();
+        return view('order.index')->with('orders', $orders);
     }
 
     /**
@@ -26,7 +28,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        dd('create');
+        return view('order.create');
     }
 
     /**

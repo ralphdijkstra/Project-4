@@ -15,4 +15,9 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'id');
     }
+
+    public function status()
+    {
+        return $this->hasOne(OrderStatus::class, 'id', 'status_id');
+    }
 }

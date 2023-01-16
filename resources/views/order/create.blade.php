@@ -11,7 +11,7 @@
     </div>
     @endif
     <div class="grid grid-cols-2">
-        
+
     <x-product-list />
     <x-shopping-cart />
     </div>

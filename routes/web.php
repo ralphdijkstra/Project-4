@@ -40,10 +40,6 @@ Route::get('/menu', function () {
     return view('menu');
 })->middleware(['auth', 'verified'])->name('menu');
 
-Route::get('/order', function () {
-    return view('order');
-})->middleware(['auth', 'verified'])->name('order');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -55,7 +51,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(OrderController::class)->group(function () {
-    Route::get('/orders/{id}', 'show');
+    Route::get('/orders', 'index')->name('orders.index');
+    Route::get('/orders/create', 'create')->name('orders.create');
+    Route::get('/orders/{id}', 'show')->name('orders.show');
     Route::post('/orders', 'store')->name('orders.store');
 });
 
