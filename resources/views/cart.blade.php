@@ -1,9 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title')
-    Dashboard
-@endsection
-
 @section('content')
+    <x-shopping-cart/>
 
 @endsection

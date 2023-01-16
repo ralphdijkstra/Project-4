@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
+use App\Models\OrderStatus;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
-class CategorySeeder extends Seeder
+class StatusSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,23 +15,23 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $categories = [
+        $statusses = [
             [
-                'name' => 'Pizzas'
+                'name' => 'Aan het bereiden'
             ],
             [
-                'name' => 'Side dishes'
+                'name' => 'In de oven'
             ],
             [
-                'name' => 'Drinks'
+                'name' => 'Onderweg'
             ],
             [
-                'name' => 'Desserts'
+                'name' => 'Bezorgd'
             ],
         ];
 
-        foreach($categories as $key => $value){
-            Category::create($value);
+        foreach($statusses as $key => $value){
+            OrderStatus::create($value);
         }
     }
 }

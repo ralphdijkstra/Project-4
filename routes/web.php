@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Person;
@@ -34,10 +36,25 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/menu', function () {
+    return view('menu');
+})->middleware(['auth', 'verified'])->name('menu');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/cart', [ProductController::class, 'cart'])->name('cart');
+    Route::get('/add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('product.addtocart');
+    Route::patch('update-cart', [ProductController::class, 'refresh'])->name('product.refresh');
+    Route::delete('remove-from-cart', [ProductController::class, 'remove'])->name('product.remove');
+});
+
+Route::controller(OrderController::class)->group(function () {
+    Route::get('/orders', 'index')->name('orders.index');
+    Route::get('/orders/create', 'create')->name('orders.create');
+    Route::get('/orders/{id}', 'show')->name('orders.show');
+    Route::post('/orders', 'store')->name('orders.store');
 });
 
 // management routes protected by the role middleware for management and the admin user
