@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('status_id')->constrained();
             $table->timestamps();
         });
         Schema::create('order_items', function (Blueprint $table) {
@@ -24,6 +25,11 @@ return new class extends Migration
             $table->string('size');
             $table->integer('quantity');
             $table->foreignId('order_id')->constrained();
+            $table->timestamps();
+        });
+        Schema::create('order_status', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }

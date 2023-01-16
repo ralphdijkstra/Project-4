@@ -41,6 +41,7 @@ class OrderController extends Controller
 
         $order = new Order();
         $order->user_id = $user;
+        $order->status_id = 1;
         $order->save();
 
         foreach (session('cart') as $key => $value) {
