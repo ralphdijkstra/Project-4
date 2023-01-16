@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function index()
     {
         $user = Auth::user()->id;
-        $orders = Order::where('user_id', $user)->get();
+        $orders = Order::where('user_id', $user)->orderby('created_at', 'DESC')->get();
         return view('order.index')->with('orders', $orders);
     }
 
@@ -52,6 +52,7 @@ class OrderController extends Controller
             $orderitem->product_id = $value['id'];
             $orderitem->size = $value['size'];
             $orderitem->quantity = $value['quantity'];
+            $orderitem->price = $value['price'];
             $orderitem->save();
         }
 
@@ -66,9 +67,11 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        $order = Order::find($id);
+        $orderitems = OrderItem::where('order_id', $id)->get();
+        return view('order.show')->with('order', $order)->with('orderitems', $orderitems);
     }
 
     /**
