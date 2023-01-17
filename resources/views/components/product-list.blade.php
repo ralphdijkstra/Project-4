@@ -1,11 +1,11 @@
-<div class="bg-white overflow-hidden shadow sm:rounded-lg">
-    <div class=" p-6">
+<div class="p-6">
+    <div class="font-bold text-xl">Products</div>
         @foreach ($products as $product)
             <form action="{{ route('product.addtocart', [$product->id]) }}">
                 <div class="grid grid-cols-1 md:grid-cols-4">
-                    <div class="p-6">{{ $product->name }}</div>
-                    <div class="p-6">€ {{ number_format($product->price, 2) }}</div>
-                    <div class="p-6">
+                    <div class="py-6 flex items-center">{{ $product->name }}</div>
+                    <div class="py-6 flex items-center">€ {{ number_format($product->price, 2) }}</div>
+                    <div class="py-6">
                         <select name="size" id="size">
                             <option value="25">(25 cm) Small -€ 1,50</option>
                             <option value="29" selected>(29 cm) Medium</option>
@@ -17,5 +17,4 @@
             </form>
     </div>
     @endforeach
-</div>
 </div>
