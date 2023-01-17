@@ -70,7 +70,7 @@ class ProductSeeder extends Seeder
                 'name' => 'Pizza Four Cheese',
                 'description' => 'Tomatensaus, mozzarella, gouda, cheddar en franse kaas',
                 'image' => '',
-                'price' => '13.99',
+                'price' => '12.99',
                 'category_id' => '1',
             ],
         ];
