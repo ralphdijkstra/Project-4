@@ -110,7 +110,10 @@
                 <form action="{{ route('orders.store') }}" method="POST">
                     @csrf
                     <input type="submit"
-                        value="{{ $x }} @if ($x > 1) Items @else Item @endif | € {{ $total }} Afrekenen">
+                        @if ($x > 1) value="{{ $x }} Items | € {{ $total }} Afrekenen"
+                        @else value="{{ $x }} Item | € {{ $total }} Afrekenen"
+                        @endif
+                    >
                 </form>
             </div>
         @endif
