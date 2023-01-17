@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', [ProductController::class, 'cart'])->name('cart');
     Route::get('/add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('product.addtocart');
     Route::patch('update-cart', [ProductController::class, 'refresh'])->name('product.refresh');
-    Route::delete('remove-from-cart', [ProductController::class, 'remove'])->name('product.remove');
+    Route::delete('remove-from-cart/{id}', [ProductController::class, 'remove'])->name('product.remove');
 });
 
 Route::controller(OrderController::class)->group(function () {

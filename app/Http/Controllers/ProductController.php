@@ -160,11 +160,11 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Product updated from cart successfully!');
     }
 
-    public function remove(Request $request)
+    public function remove($id)
     {
         $cart = session()->get('cart');
-        if (isset($cart[$request->id])) {
-            unset($cart[$request->id]);
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
             session()->put('cart', $cart);
         }
         return redirect()->back()->with('success', 'Product removed from cart successfully!');
