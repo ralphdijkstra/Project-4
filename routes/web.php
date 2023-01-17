@@ -53,8 +53,11 @@ Route::middleware('auth')->group(function () {
 Route::controller(OrderController::class)->group(function () {
     Route::get('/orders', 'index')->name('orders.index');
     Route::get('/orders/create', 'create')->name('orders.create');
+    Route::get('/orders/manage', 'manage')->name('orders.manage');
     Route::get('/orders/{id}', 'show')->name('orders.show');
+    Route::get('/orders/{id}/edit', 'edit')->name('orders.edit');
     Route::post('/orders', 'store')->name('orders.store');
+    Route::patch('/orders/{id}', 'update')->name('orders.update');
 });
 
 Route::resource('products', ProductController::class);

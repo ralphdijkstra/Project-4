@@ -47,7 +47,7 @@
                             </button>
                         </x-slot>
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('orders.index')">
+                            <x-dropdown-link :href="route('orders.manage')">
                                 {{ __('Orders') }}
                             </x-dropdown-link>
                         </x-slot>

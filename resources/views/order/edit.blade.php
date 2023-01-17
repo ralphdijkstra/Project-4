@@ -1,19 +1,27 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Order: {{ $order->created_at }} by {{ $order->user->name }}
+    Edit order: {{ $order->created_at }} by {{ $order->user->name }}
 @endsection
 
 @section('content')
-    <div class="w-full text-right pt-6 pr-6">
-        <a href="{{ route('orders.edit', ['id' => $order->id]) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-    </div>
-    <div class="px-6 pb-12 max-w-5xl mx-auto">
+    <div class="p-6 max-w-5xl mx-auto">
         <div class="text-xl font-bold">Order Details</div>
         <div class="py-5">
             <div>Name: {{ $order->user->name }}</div>
             <div>Ordered at: {{ $order->created_at }}</div>
-            <div>Status: {{ $order->status->name }}</div>
+            <div>Status:
+                <form action="/orders/{{ $order->id }}" method="POST">
+                    @method('PATCH')
+                    @csrf
+                    <select name="status" id="status">
+                        @foreach ($orderstatusses as $orderstatus)
+                            <option @if($orderstatus->id == $order->status->id) selected @endif value="{{ $orderstatus->id }}">{{ $orderstatus->name }}</option>
+                        @endforeach
+                    </select>
+                    <input type="submit" value="Edit" class="btn">
+                </form>
+            </div>
         </div>
         <div class="text-xl font-bold">Order Items</div>
         <div class="grid grid-cols-5 py-5">
