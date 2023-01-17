@@ -14,7 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        return view('product.index')->with('products', $products);
     }
 
     /**
@@ -57,7 +58,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('product.edit')->with('product', $product);
     }
 
     /**

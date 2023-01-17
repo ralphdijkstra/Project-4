@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -80,9 +81,12 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit($id)
     {
-        //
+        $order = Order::find($id);
+        $orderstatusses = OrderStatus::all();
+        $orderitems = OrderItem::where('order_id', $id)->get();
+        return view('order.edit')->with('order', $order)->with('orderitems', $orderitems)->with('orderstatusses', $orderstatusses);
     }
 
     /**
@@ -92,9 +96,12 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id)
     {
-        //
+        $order = Order::find($id);
+        $order->status_id  = $request->input('status');
+        $order->update();
+        return redirect('/orders/manage');
     }
 
     /**
@@ -107,4 +114,10 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function manage() {
+        $orders = Order::orderBy('created_at', 'DESC')->get();
+        return view('order.manage')->with('orders', $orders);
+    }
+
 }
