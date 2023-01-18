@@ -61,6 +61,7 @@ Route::controller(OrderController::class)->group(function () {
 });
 
 Route::resource('products', ProductController::class);
+Route::get('products/{id}/delete', [ProductController::class, 'delete'])->name('products.delete');
 
 // management routes protected by the role middleware for management and the admin user
 Route::middleware(['role:management|admin'])->group(function () {
