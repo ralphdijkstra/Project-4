@@ -20,7 +20,10 @@ return new class extends Migration
         });
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->nullable();
+            $table->string('address');
+            $table->string('postal_code');
+            $table->string('city');
             $table->foreignId('status_id')->constrained('order_status');
             $table->timestamps();
         });

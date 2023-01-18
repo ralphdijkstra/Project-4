@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProductController;
@@ -64,6 +65,11 @@ Route::controller(OrderController::class)->group(function () {
     Route::patch('/orders/{id}', 'update')->name('orders.update');
 });
 
+Route::controller(AddressController::class)->group(function () {
+    Route::get('/address/{id}/delete', 'delete')->name('address.delete');
+    Route::post('/set-address', 'set')->name('address.set');
+});
+
 Route::resource('products', ProductController::class);
 Route::get('products/{id}/delete', [ProductController::class, 'delete'])->name('products.delete');
 
@@ -78,7 +84,7 @@ Route::middleware(['role:management|admin'])->group(function () {
     Route::resource('users', UserController::class);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
 // test routes

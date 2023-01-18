@@ -5,5 +5,5 @@
 @endsection
 
 @section('content')
-
+{{ $selected_address }}
 @endsection

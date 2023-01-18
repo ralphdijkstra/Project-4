@@ -43,8 +43,6 @@ class OrderController extends Controller
                     ]
                 ];
                 session()->put('addresses', $addresses);
-
-                dump($addresses);
             } else {
                 if ($request->address != null && $request->postal_code != null && $request->city != null) {
                     $addresses = [
@@ -56,27 +54,20 @@ class OrderController extends Controller
                     ];
                 }
                 session()->put('addresses', $addresses);
-
-                dump($addresses);
+                return view('order.create');
             }
-        } else {
-            if ($request->address != null && $request->postal_code != null && $request->city != null) {
-                $count = count($addresses) + 1;
-                $addresses = [
-                    $count => [
-                        "address" => $request->address,
-                        "postal_code" => $request->postal_code,
-                        "city" => $request->city,
-                    ]
-                ];
-            }
-            session()->put('addresses', $addresses);
-
-            dump($addresses);
         }
 
-        // $count = count($addresses) + 1;
+        $count = count($addresses) + 1;
 
+        if ($request->address != null && $request->postal_code != null && $request->city != null) {
+            $addresses[$count] = [
+                "address" => $request->address,
+                "postal_code" => $request->postal_code,
+                "city" => $request->city,
+            ];
+        }
+        session()->put('addresses', $addresses);
         return view('order.create');
     }
 
@@ -88,10 +79,14 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user()->id;
-
         $order = new Order();
+        if (Auth::check()) {
+        $user = Auth::user()->id;
         $order->user_id = $user;
+        }
+        $order->address = $request->address;
+        $order->postal_code = $request->postal_code;
+        $order->city = $request->city;
         $order->status_id = 1;
         $order->save();
 
@@ -165,7 +160,6 @@ class OrderController extends Controller
 
     public function manage()
     {
-        session()->forget('addresses');
         $orders = Order::orderBy('created_at', 'DESC')->get();
         return view('order.manage')->with('orders', $orders);
     }
