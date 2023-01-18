@@ -27,8 +27,56 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $addresses = session()->get('addresses');
+
+        if (!$addresses) {
+            if (Auth::check()) {
+                $user = Auth::user();
+
+                $addresses = [
+                    1 => [
+                        "address" => $user->person->address,
+                        "postal_code" => $user->person->postal_code,
+                        "city" => $user->person->city,
+                    ]
+                ];
+                session()->put('addresses', $addresses);
+
+                dump($addresses);
+            } else {
+                if ($request->address != null && $request->postal_code != null && $request->city != null) {
+                    $addresses = [
+                        1 => [
+                            "address" => $request->address,
+                            "postal_code" => $request->postal_code,
+                            "city" => $request->city,
+                        ]
+                    ];
+                }
+                session()->put('addresses', $addresses);
+
+                dump($addresses);
+            }
+        } else {
+            if ($request->address != null && $request->postal_code != null && $request->city != null) {
+                $count = count($addresses) + 1;
+                $addresses = [
+                    $count => [
+                        "address" => $request->address,
+                        "postal_code" => $request->postal_code,
+                        "city" => $request->city,
+                    ]
+                ];
+            }
+            session()->put('addresses', $addresses);
+
+            dump($addresses);
+        }
+
+        // $count = count($addresses) + 1;
+
         return view('order.create');
     }
 
@@ -115,9 +163,10 @@ class OrderController extends Controller
         //
     }
 
-    public function manage() {
+    public function manage()
+    {
+        session()->forget('addresses');
         $orders = Order::orderBy('created_at', 'DESC')->get();
         return view('order.manage')->with('orders', $orders);
     }
-
 }
