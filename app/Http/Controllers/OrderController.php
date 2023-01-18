@@ -101,7 +101,7 @@ class OrderController extends Controller
         $order = Order::find($id);
         $order->status_id  = $request->input('status');
         $order->update();
-        return redirect('/orders/manage');
+        return redirect('/orders/' . $id);
     }
 
     /**

@@ -11,6 +11,14 @@
     @apply bg-red-500 hover:bg-red-700 text-white;
 }
 
+.btn-succes {
+    @apply bg-green-500 hover:bg-green-700 text-white;
+}
+
+.btn-invalid {
+    @apply bg-gray-300 hover:bg-gray-400 text-white;
+}
+
 input[type=submit] {
     @apply cursor-pointer;
 }

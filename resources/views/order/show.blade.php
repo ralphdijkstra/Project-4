@@ -34,5 +34,18 @@
             @endforeach
         </div>
         <div>Total: € {{ number_format($total, 2) }}</div>
+        <form class="py-3" action="/orders/{{ $order->id }}" method="POST">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="5">
+            <div class="flex flex-row items-center">
+                @if ( $order->status->id === 1 )
+                <input class="btn btn-warning" type="submit" value="Cancel">
+                @else
+                <input class="btn btn-invalid" type="button" value="Cancel">
+                @endif
+                <p class="italic text-gray-500 p-5">Je kan je order alleen annuleren als deze nog bereid word</p>
+            </div>
+        </form>
     </div>
 @endsection
