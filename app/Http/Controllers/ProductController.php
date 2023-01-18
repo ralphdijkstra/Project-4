@@ -56,8 +56,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
+        $product = Product::find($id);
         return view('product.edit')->with('product', $product);
     }
 
@@ -79,9 +80,16 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product){
+        $product->delete();
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully');
+    }
+
+    public function delete($id)
     {
-        //
+        $product = Product::find($id);
+        return view('product.delete')->with('product', $product);
+
     }
 
     public function cart()
