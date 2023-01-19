@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProductController;
@@ -48,10 +49,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/cart', [ProductController::class, 'cart'])->name('cart');
-Route::get('/add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('product.addtocart');
-Route::patch('update-cart', [ProductController::class, 'refresh'])->name('product.refresh');
-Route::delete('remove-from-cart/{id}', [ProductController::class, 'remove'])->name('product.remove');
+Route::controller(CartController::class)->group(function () {
+    Route::get('/cart', 'index')->name('cart');
+    Route::get('/add-to-cart/{id}', 'addToCart')->name('product.addtocart');
+    Route::patch('/update-cart', 'refresh')->name('product.refresh');
+    Route::delete('/remove-from-cart/{id}', 'destroy')->name('product.remove');
+});
 
 Route::controller(OrderController::class)->group(function () {
     Route::get('/orders', 'index')->name('orders.index');
