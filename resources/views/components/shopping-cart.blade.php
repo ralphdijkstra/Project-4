@@ -1,17 +1,16 @@
 <div>
-    <?php $total = 0;
-    $x = 0; ?>
-    <div class="p-5">
-        <div class="grid grid-cols-6">
-        <div class="font-bold">Product</div>
-        <div class="font-bold">Price</div>
-        <div class="font-bold">Quantity</div>
-        <div class="font-bold">Size</div>
-        <div class="font-bold">Subtotal</div>
-        <div></div>
-        </div>
-
-        @if (session('cart'))
+    @if (session('cart'))
+        <?php $total = 0;
+        $x = 0; ?>
+        <div class="py-3">
+            <div class="grid grid-cols-6">
+                <div class="font-bold">Product</div>
+                <div class="font-bold">Price</div>
+                <div class="font-bold">Quantity</div>
+                <div class="font-bold">Size</div>
+                <div class="font-bold">Subtotal</div>
+                <div></div>
+            </div>
             @foreach (session('cart') as $id => $details)
                 <?php $total += $details['price'] * $details['quantity'];
                 $x++; ?>
@@ -109,16 +108,48 @@
                     </div>
                 </div>
             @endforeach
-            <div class="font-bold btn w-60">
-                <form action="{{ route('orders.store') }}" method="POST">
+            <form action="{{ route('orders.store') }}" method="POST">
+                <div class="text-xl font-bold py-3">Bezorgen naar:</div>
+                @auth
+                    <div class="py-3">
+                        <div>
+                            Address: <input type="text" name="address" id="address"
+                                value="{{ Auth::user()->person->address }}" readonly>
+                        </div>
+                        <div>
+                            Postal code: <input type="text" name="postal_code" id="postal_code"
+                                value="{{ Auth::user()->person->postal_code }}" readonly>
+                        </div>
+                        <div>
+                            City: <input type="text" name="city" id="city"
+                                value="{{ Auth::user()->person->city }}" readonly>
+                        </div>
+                    </div>
+                @else
+                    <div class="py-3">
+                        <div>
+                            Name: <input type="text" name="guest_name" id="guest_name">
+                        </div>
+                        <div>
+                            Address: <input type="text" name="address" id="address">
+                        </div>
+                        <div>
+                            Postal code: <input type="text" name="postal_code" id="postal_code">
+                        </div>
+                        <div>
+                            City: <input type="text" name="city" id="city">
+                        </div>
+                    </div>
+                @endauth
+                <div class="font-bold btn w-60 my-3">
                     @csrf
                     <input type="submit"
                         @if ($x > 1) value="{{ $x }} Items | € {{ $total }} Afrekenen"
                         @else value="{{ $x }} Item | € {{ $total }} Afrekenen" @endif>
-                </form>
-            </div>
-        @endif
-    </div>
+                </div>
+            </form>
+    @endif
+</div>
 </div>
 
 <script type="text/javascript">

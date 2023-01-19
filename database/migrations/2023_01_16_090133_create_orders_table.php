@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('order_status', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
-        });
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->string('guest_name')->nullable();
+            $table->string('address');
+            $table->string('postal_code');
+            $table->string('city');
             $table->foreignId('status_id')->constrained('order_status');
             $table->timestamps();
         });
@@ -31,6 +30,11 @@ return new class extends Migration
             $table->integer('quantity');
             $table->decimal('price');
             $table->foreignId('order_id')->constrained();
+            $table->timestamps();
+        });
+        Schema::create('order_status', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }

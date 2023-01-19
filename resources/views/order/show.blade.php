@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Order: {{ $order->created_at }} by {{ $order->user->name }}
+    Order: {{ $order->created_at }}
 @endsection
 
 @section('content')
@@ -11,7 +11,12 @@
     <div class="px-6 pb-12 max-w-5xl mx-auto">
         <div class="text-xl font-bold">Order Details</div>
         <div class="py-5">
-            <div>Name: {{ $order->user->name }}</div>
+            @isset($order->user->name)
+                <div>Name: {{ $order->user->name }}</div>
+            @else
+                <div>Name: {{ $order->guest_name }}</div>
+            @endisset
+            <div>Address: {{ $order->address }}, {{ $order->postal_code }} {{ $order->city }}</div>
             <div>Ordered at: {{ $order->created_at }}</div>
             <div>Status: {{ $order->status->name }}</div>
         </div>
@@ -39,10 +44,10 @@
             @method('PATCH')
             <input type="hidden" name="status" value="5">
             <div class="flex flex-row items-center">
-                @if ( $order->status->id === 1 )
-                <input class="btn btn-warning" type="submit" value="Cancel">
+                @if ($order->status->id === 1)
+                    <input class="btn btn-warning" type="submit" value="Cancel">
                 @else
-                <input class="btn btn-invalid" type="button" value="Cancel">
+                    <input class="btn btn-invalid" type="button" value="Cancel">
                 @endif
                 <p class="italic text-gray-500 p-5">Je kan je order alleen annuleren als deze nog bereid word</p>
             </div>

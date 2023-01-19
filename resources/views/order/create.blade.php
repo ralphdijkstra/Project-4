@@ -15,12 +15,6 @@
 
     <div class="p-6">
         <div class="text-xl font-bold">Details Order</div>
-        @auth
-        Bezorgen naar:
-        {{ Auth::user()->person->address }}
-        {{ Auth::user()->person->postal_code }}
-        {{ Auth::user()->person->city }}
-        @endauth
         <div class="text-xl font-bold mt-6">Shopping Cart</div>
         <x-shopping-cart />
     </div>

@@ -40,10 +40,17 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user()->id;
-
         $order = new Order();
-        $order->user_id = $user;
+        if (Auth::check()) {
+            $user = Auth::user()->id;
+            $order->user_id = $user;
+        }
+        else {
+            $order->guest_name = $request->guest_name;
+        }
+        $order->address = $request->address;
+        $order->postal_code = $request->postal_code;
+        $order->city = $request->city;
         $order->status_id = 1;
         $order->save();
 
@@ -115,9 +122,9 @@ class OrderController extends Controller
         //
     }
 
-    public function manage() {
+    public function manage()
+    {
         $orders = Order::orderBy('created_at', 'DESC')->get();
         return view('order.manage')->with('orders', $orders);
     }
-
 }
