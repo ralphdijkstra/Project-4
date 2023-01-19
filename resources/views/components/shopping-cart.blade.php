@@ -1,102 +1,14 @@
 <div>
-    <?php
-    // $selected_address = [
-    //     'address' => "Waterfront 451",
-    //     'postal_code' => "5658 SM",
-    //     'city' => "Eindhoven",
-    // ];
-    ?>  
-    @dump($selected_address)
-    <div class="text-xl font-bold">Details Order</div>
-    <form action="{{ route('address.set') }}" method="POST">
-        @csrf
-        Address:
-
-        @if (session('addresses') !== null)
-            <?php $x = 0; ?>
-            @foreach (session('addresses') as $address => $details)
-                <div class="flex items-center btn p-3 m-1 w-full">
-                    <input class="mr-5 cursor-pointer" type="radio"
-                        @empty($selected_address) 
-                            checked 
-                            <?php
-                            $selected_address = [
-                                'address' => $details['address'],
-                                'postal_code' => $details['postal_code'],
-                                'city' => $details['city'],
-                            ];
-                            ?>  
-                            @else
-                            @if($selected_address == session('addresses')[$address]) 
-                            checked
-                            @endif
-                        @endempty
-                        name="address" id="{{ $address }}" value="{{ $address }}">
-                    <label class="cursor-pointer w-full h-full" for="address">{{ $details['address'] }},
-                        {{ $details['postal_code'] }} {{ $details['city'] }}</label>
-                    @auth
-                        @if (Auth::user()->person->address != $details['address'])
-                            <a href="{{ route('address.delete', ['id' => $address]) }}" class="fa fa-trash"
-                                aria-hidden="true"></a>
-                        @endif
-                    @else
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                    @endauth
-                </div>
-                <?php $x++; ?>
-            @endforeach
-            @dump($selected_address)
-        @endif
-        <button type="button" class="btn btn-success p-3 m-1 flex items-center w-full" onclick="openModal('modal')"><i
-                class="fa fa-plus ml-0.5 mr-5" aria-hidden="true"></i> Add address</button>
-        <input type="submit" value="set">
-    </form>
-
-    <div id="modal" class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto px-4 modal">
-        <div class="relative top-40 mx-auto shadow-xl rounded-md bg-white max-w-sm">
-
-            <!-- Modal header -->
-            <div class="flex justify-between items-center bg-green-500 text-white text-xl rounded-t-md px-4 py-2">
-                <h3>Add address</h3>
-                <button onclick="closeModal('modal')">x</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="max-h-48 p-4">
-                <form action="{{ route('orders.create') }}" method="POST">
-                    @csrf
-                    <div>
-                        <label for="address">Address:</label>
-                        <input type="text" name="address" id="address">
-                    </div>
-                    <div>
-                        <label for="postal_code">Postal code:</label>
-                        <input type="text" name="postal_code" id="postal_code">
-                    </div>
-                    <div>
-                        <label for="city">City:</label>
-                        <input type="text" name="city" id="city">
-                    </div>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="px-4 py-2 border-t border-t-gray-500 flex justify-end items-center space-x-4">
-                <button type="button" class="btn btn-warning" onclick="closeModal('modal')">Cancel</button>
-                <input class="btn btn-success" type="submit" value="Confirm"></form>
-            </div>
-        </div>
-    </div>
-    <div class="text-xl font-bold mt-6">Shopping Cart</div>
     <?php $total = 0;
     $x = 0; ?>
     <div class="p-5">
         <div class="grid grid-cols-6">
-            <div class="font-bold">Product</div>
-            <div class="font-bold">Price</div>
-            <div class="font-bold">Quantity</div>
-            <div class="font-bold">Size</div>
-            <div class="font-bold">Subtotal</div>
-            <div></div>
+        <div class="font-bold">Product</div>
+        <div class="font-bold">Price</div>
+        <div class="font-bold">Quantity</div>
+        <div class="font-bold">Size</div>
+        <div class="font-bold">Subtotal</div>
+        <div></div>
         </div>
 
         @if (session('cart'))
@@ -187,8 +99,8 @@
                                 <!-- Modal footer -->
                                 <div
                                     class="px-4 py-2 border-t border-t-gray-500 flex justify-end items-center space-x-4">
-                                    <button class="btn btn-warning" type="button"
-                                        onclick="closeModal('modal{{ $id }}')">Cancel</button>
+                                    <button class="btn btn-warning"
+                                    type="button" onclick="closeModal('modal{{ $id }}')">Cancel</button>
                                     <input class="btn" type="submit" value="Confirm">
                                     </form>
                                 </div>
@@ -200,9 +112,6 @@
             <div class="font-bold btn w-60">
                 <form action="{{ route('orders.store') }}" method="POST">
                     @csrf
-                    <input type="text" name="address" value="{{ $selected_address['address'] }}">
-                    <input type="text" name="postal_code" value="{{ $selected_address['postal_code'] }}">
-                    <input type="text" name="city" value="{{ $selected_address['city'] }}">
                     <input type="submit"
                         @if ($x > 1) value="{{ $x }} Items | € {{ $total }} Afrekenen"
                         @else value="{{ $x }} Item | € {{ $total }} Afrekenen" @endif>

@@ -102,7 +102,8 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         $cart = session()->get('cart');
-        
+
+
         $x = 1;
 
         if (!$cart) {
