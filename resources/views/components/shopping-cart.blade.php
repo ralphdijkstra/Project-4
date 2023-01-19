@@ -100,7 +100,7 @@
                                 <div
                                     class="px-4 py-2 border-t border-t-gray-500 flex justify-end items-center space-x-4">
                                     <button class="btn btn-warning"
-                                    type="button" onclick="closeModal('modal{{ $id }}')">Cancel</button>
+                                        onclick="closeModal('modal{{ $id }}')">Cancel</button>
                                     <input class="btn" type="submit" value="Confirm">
                                     </form>
                                 </div>

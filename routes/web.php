@@ -56,7 +56,6 @@ Route::delete('remove-from-cart/{id}', [ProductController::class, 'remove'])->na
 Route::controller(OrderController::class)->group(function () {
     Route::get('/orders', 'index')->name('orders.index');
     Route::get('/orders/create', 'create')->name('orders.create');
-    Route::post('/orders/create', 'create')->name('orders.create');
     Route::get('/orders/manage', 'manage')->name('orders.manage');
     Route::get('/orders/{id}', 'show')->name('orders.show');
     Route::get('/orders/{id}/edit', 'edit')->name('orders.edit');

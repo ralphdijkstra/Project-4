@@ -11,7 +11,7 @@
     @apply bg-red-500 hover:bg-red-700 text-white;
 }
 
-.btn-success {
+.btn-succes {
     @apply bg-green-500 hover:bg-green-700 text-white;
 }
 
