@@ -2,12 +2,14 @@
 
 namespace App\View\Components;
 
+use App\Models\Ingredient;
 use App\Models\Product;
 use Illuminate\View\Component;
 
 class ProductList extends Component
 {
     public $products;
+    public $ingredients;
 
     /**
      * Create a new component instance.
@@ -18,6 +20,8 @@ class ProductList extends Component
     {
         // $this->products = ['salami pizza', 'hawai pizza', 'margarita pizza'];
         $this->products = Product::all();
+        $this->ingredients = Ingredient::all();
+
     }
 
     /**

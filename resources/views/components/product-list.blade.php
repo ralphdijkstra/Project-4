@@ -15,9 +15,9 @@
                     </div>
                     <div class="py-6">
                         <select name="ingredients[]" id="ingredients" multiple>
-                            <option value="kaas">Kaas</option>
-                            <option value="salami">Salami</option>
-                            <option value="ui">Ui</option>
+                            @foreach ($ingredients as $ingredient)
+                                <option value="{{ $ingredient->id }}" @if ($product->ingredients->contains($ingredient)) selected @endif >{{ $ingredient->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <input type="submit" value="Add to cart" class="btn m-6">
