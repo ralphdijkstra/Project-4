@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
@@ -25,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('product.create');
     }
 
     /**
@@ -36,7 +37,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'unique:products', 'max:20'],
+            'description' => ['required', 'max:234'],
+            'image' => ['required', 'max:234'],
+            'price' => ['required', 'max:234'],
+
+        ]);
+    
+        // Product::create($request->only(['name', 'description','image','price']), 1);
+
+        $product = new Product();
+        $product->name = $request->name;
+        $product->description = $request->name;
+        $product->image = $request->image;
+        $product->price = $request->price;
+        $product->category_id = 1;
+        $product->save();
+    
+        return redirect()->route('products.index');
+    
     }
 
     /**
@@ -71,7 +91,18 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        
+        $request->validate([
+            'name' => ['required', Rule::unique('products')->ignore($product), 'max:20'],
+            'description' => ['required', 'max:234'],
+            'img' => [ 'max:234'],
+            'price' => ['required', 'max:234'],
+
+        ]);
+    
+        $product->update($request->only(['name', 'description', 'image', 'price']));
+        return redirect()->route('products.index')->with('success', 'Product updated successfully');
+
     }
 
     /**

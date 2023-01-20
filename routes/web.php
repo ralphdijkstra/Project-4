@@ -66,8 +66,12 @@ Route::controller(OrderController::class)->group(function () {
     Route::patch('/orders/{id}', 'update')->name('orders.update');
 });
 
-Route::resource('products', ProductController::class);
+Route::resource('ingredients', IngredientController::class);
+
+
+
 Route::get('products/{id}/delete', [ProductController::class, 'delete'])->name('products.delete');
+Route::resource('products', ProductController::class);
 
 // management routes protected by the role middleware for management and the admin user
 Route::middleware(['role:management|admin'])->group(function () {

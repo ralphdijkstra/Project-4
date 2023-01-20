@@ -5,12 +5,26 @@
 @endsection
 
 @section('content')
-<form action="" method="">
+<form action="{{ route('products.update', ['product' => $product->id]) }}" method="POST">
+    @csrf @method('PATCH')
     <div>Name: <input type="text" name="name" id="name" value="{{ $product->name }}"></div>
-    <div>Description: <input type="text" name="name" id="name" value="{{ $product->description }}"></div>
-    <div>Image: <input type="text" name="name" id="name" value="{{ $product->image }}"></div>
-    <div>Price: <input type="number" name="name" id="name" value="{{ $product->price }}"></div>
+    @error('name')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
+    <div>Description: <input type="text" name="description" id="description" value="{{ $product->description }}"></div>
+    @error('description')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
+    <div>Image: <input type="text" name="image" id="image" value="{{ $product->image }}"></div>
+    @error('image')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
+    <div>Price: <input type="number" name="price" id="price" value="{{ $product->price }}"></div>
+    @error('price')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
     <div><input type="submit" class="btn" value="Edit"></div>
+    <a href="{{ route('products.index') }}" class="btn btn-secondary">Cancel</a>
     {{-- CATEGORY --}}
 </form>
 @endsection
