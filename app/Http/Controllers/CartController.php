@@ -107,12 +107,13 @@ class CartController extends Controller
             "quantity" => 1,
             "price" => $product->price,
             "size" => $request->size,
+            "ingredients" => $request->ingredients,
         ];
 
         $collection = collect();
 
         foreach (session('cart') as $value) {
-            if ($value['name'] == $new_product['name'] && $value['size'] == $new_product['size']) {
+            if ($value['name'] == $new_product['name'] && $value['size'] == $new_product['size'] && $value['ingredients'] == $new_product['ingredients']) {
                 $new_quantity = $value['quantity'] + 1;
                 $collection->push(
                     [
@@ -121,6 +122,7 @@ class CartController extends Controller
                         "quantity" => $new_quantity,
                         "price" => $value['price'],
                         "size" => $value['size'],
+                        "ingredients" => $value['ingredients'],
                     ]
                 );
 
@@ -135,6 +137,7 @@ class CartController extends Controller
                         "quantity" => $value['quantity'],
                         "price" => $value['price'],
                         "size" => $value['size'],
+                        "ingredients" => $value['ingredients'],
                     ]
                 );
             }

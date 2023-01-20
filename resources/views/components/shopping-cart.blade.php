@@ -3,18 +3,19 @@
         <?php $total = 0;
         $x = 0; ?>
         <div class="py-3">
-            <div class="grid grid-cols-6">
+            <div class="grid grid-cols-7">
                 <div class="font-bold">Product</div>
                 <div class="font-bold">Price</div>
                 <div class="font-bold">Quantity</div>
                 <div class="font-bold">Size</div>
+                <div class="font-bold">Veranderingen</div>
                 <div class="font-bold">Subtotal</div>
                 <div></div>
             </div>
             @foreach (session('cart') as $id => $details)
                 <?php $total += $details['price'] * $details['quantity'];
                 $x++; ?>
-                <div class="grid grid-cols-6 py-3">
+                <div class="grid grid-cols-7 py-3">
                     <div>{{ $details['name'] }}</div>
                     <div>
                         @switch($details['size'])
@@ -43,6 +44,11 @@
                     </div>
                     <div>{{ $details['quantity'] }}</div>
                     <div>{{ $details['size'] }} cm</div>
+                    <div>
+                        @foreach ($details['ingredients'] as $ingredient)
+                            Toevoegen {{ $ingredient }}
+                        @endforeach
+                    </div>
                     <div>€ {{ number_format($price * $details['quantity'], 2) }}</div>
                     <div class="flex">
                         <form action="{{ route('cart.remove', ['id' => $id]) }}" method="POST">
@@ -99,10 +105,10 @@
                                         </div>
                                         <div>
                                             <label class="block" for="ingredients">Ingredients:</label>
-                                            <select class="mb-5" name="ingredients" id="ingredients" multiple>
-                                                <option value="kaas">Kaas</option>
-                                                <option value="kaas">Salami</option>
-                                                <option value="kaas">Ui</option>
+                                            <select class="mb-5" name="ingredients[]" id="ingredients" multiple>
+                                                @foreach ($details['ingredients'] as $ingredient)
+                                                <option value="{{ $ingredient }}" selected>{{ $ingredient }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                 </div>
@@ -110,7 +116,7 @@
                                 <!-- Modal footer -->
                                 <div
                                     class="px-4 py-2 border-t border-t-gray-500 flex justify-end items-center space-x-4">
-                                    <button class="btn btn-warning"
+                                    <button class="btn btn-warning" type="button"
                                         onclick="closeModal('modal{{ $id }}')">Cancel</button>
                                     <input class="btn" type="submit" value="Confirm">
                                     </form>
