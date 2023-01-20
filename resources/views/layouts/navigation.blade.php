@@ -75,7 +75,7 @@
                             <x-dropdown-link :href="route('products.index')">
                                 {{ __('Products') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('products.index')">
+                            <x-dropdown-link :href="route('ingredients.index')">
                                 {{ __('Ingredients') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('products.index')">

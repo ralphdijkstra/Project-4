@@ -1,23 +1,22 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Products
+    Ingredients
 @endsection
 
 @section('content')
-    @foreach ($products as $product)
+    @foreach ($ingredients as $ingredient)
   
-
-    <div>  {{ $product->name }}
-        <a href="{{ route('products.edit', ['product' => $product->id]) }}">
+    <div>  {{ $ingredient->name }}
+        <a href="{{ route('ingredients.edit', ['ingredient' => $ingredient->id]) }}">
            <input type="submit" class="btn" value="Edit"></a>
-        <a href="{{ route('products.delete', ['id' => $product->id]) }}">
+        <a href="{{ route('ingredients.delete', ['id' => $ingredient->id]) }}">
            <input type="submit" class="btn btn-warning" value="Delete"></a>
     </div>
    
     @endforeach
     <div> 
-    <a href="{{ route('products.create') }}">
+    <a href="{{ route('ingredients.create') }}">
     <input type="submit" class="btn" value="Create"></a>
     </div>
 @endsection
