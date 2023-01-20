@@ -68,8 +68,6 @@
                                     <form method="POST" action="{{ route('product.refresh') }}">
                                         @csrf
                                         @method('patch')
-                                        {{-- Hidden Inputs --}}
-                                        @dump($id)
                                         <input type="hidden" name="id" value="{{ $id }}">
                                         <input type="hidden" name="name" value="{{ $details['name'] }}">
                                         <div>
@@ -77,23 +75,36 @@
                                             <input class="mb-5" type="number" min="1" name="quantity"
                                                 id="quantity" value="{{ $details['quantity'] }}">
                                         </div>
-                                        <label class="block" for="size">Size:</label>
-                                        <select class="mb-5" name="size" id="size">
-                                            <option value="25" @if ($details['size'] == 25) selected @endif>
-                                                (25 cm)
-                                                Small -€ 1,50
-                                            </option>
-                                            <option value="29" @if ($details['size'] == 29) selected @endif>
-                                                (29 cm) Medium
-                                            </option>
-                                            <option value="35" @if ($details['size'] == 35) selected @endif>
-                                                (35 cm) Large +€ 1,50
-                                            </option>
-                                            <option value="40" @if ($details['size'] == 40) selected @endif>
-                                                (40 cm) XXL +€ 3,00
-                                            </option>
-                                        </select>
-
+                                        <div>
+                                            <label class="block" for="size">Size:</label>
+                                            <select class="mb-5" name="size" id="size">
+                                                <option value="25"
+                                                    @if ($details['size'] == 25) selected @endif>
+                                                    (25 cm)
+                                                    Small -€ 1,50
+                                                </option>
+                                                <option value="29"
+                                                    @if ($details['size'] == 29) selected @endif>
+                                                    (29 cm) Medium
+                                                </option>
+                                                <option value="35"
+                                                    @if ($details['size'] == 35) selected @endif>
+                                                    (35 cm) Large +€ 1,50
+                                                </option>
+                                                <option value="40"
+                                                    @if ($details['size'] == 40) selected @endif>
+                                                    (40 cm) XXL +€ 3,00
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block" for="ingredients">Ingredients:</label>
+                                            <select class="mb-5" name="ingredients" id="ingredients" multiple>
+                                                <option value="kaas">Kaas</option>
+                                                <option value="kaas">Salami</option>
+                                                <option value="kaas">Ui</option>
+                                            </select>
+                                        </div>
                                 </div>
 
                                 <!-- Modal footer -->

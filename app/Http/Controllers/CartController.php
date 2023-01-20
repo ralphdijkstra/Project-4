@@ -138,7 +138,6 @@ class CartController extends Controller
                     ]
                 );
             }
-
         }
 
         $collection->push($new_product);
@@ -150,6 +149,50 @@ class CartController extends Controller
 
     public function refresh(Request $request)
     {
+        $collection = collect();
+
+        foreach (session('cart') as $key => $value) {
+            if ($value['name'] == $request->name && $value['size'] == $request->size && $key != $request->id) {
+                $collection->push(
+                    [
+                        "id" => $value['id'],
+                        "name" => $value['name'],
+                        "quantity" => $value['quantity'] + $request->quantity,
+                        "price" => $value['price'],
+                        "size" => $value['size'],
+                    ]
+                );
+                $x = 1;
+            }
+            else if ($key != $request->id) {
+                $collection->push(
+                    [
+                        "id" => $value['id'],
+                        "name" => $value['name'],
+                        "quantity" => $value['quantity'],
+                        "price" => $value['price'],
+                        "size" => $value['size'],
+                    ]
+                );
+            } else {
+                $collection->push(
+                    [
+                        "id" => $value['id'],
+                        "name" => $value['name'],
+                        "quantity" => $request->quantity,
+                        "price" => $value['price'],
+                        "size" => $request->size,
+                    ]
+                );
+            }
+        }
+
+        if(isset($x)){
+            $collection->forget($request->id);
+        }
+
+        session()->put('cart', $collection);
+
         return redirect()->back()->with('success', 'Product updated from cart successfully!');
     }
 }
