@@ -45,7 +45,7 @@
                     <div>{{ $details['size'] }} cm</div>
                     <div>€ {{ number_format($price * $details['quantity'], 2) }}</div>
                     <div class="flex">
-                        <form action="{{ route('product.remove', ['id' => $id]) }}" method="POST">
+                        <form action="{{ route('cart.remove', ['id' => $id]) }}" method="POST">
                             @csrf @method('delete')
                             <input class="font-bold text-red-500" type="submit" value="Verwijder" />
                         </form>
@@ -65,7 +65,7 @@
 
                                 <!-- Modal body -->
                                 <div class="max-h-48 overflow-y-scroll p-4">
-                                    <form method="POST" action="{{ route('product.refresh') }}">
+                                    <form method="POST" action="{{ route('cart.refresh') }}">
                                         @csrf
                                         @method('patch')
                                         <input type="hidden" name="id" value="{{ $id }}">
