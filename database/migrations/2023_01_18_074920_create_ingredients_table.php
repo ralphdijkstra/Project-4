@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name', 50);
             $table->decimal('price', 8, 2);
-            $table->string('foto', 50);
-            $table->foreignId('unit_id')->constrained();
+            $table->string('image', 50);
+            //$table->foreignId('unit_id')->constrained();
             $table->timestamps();
         });
     }

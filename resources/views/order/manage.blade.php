@@ -12,11 +12,15 @@
         <div class="font-bold">Status</div>
         {{-- End of headers --}}
         @foreach ($orders as $order)
-        <a href="{{ route('orders.show', ['id' => $order->id]) }}" class="grid grid-cols-3 col-span-3 hover:bg-slate-300">
-            <div>{{ $order->user->name }}</div>
-            <div>{{ $order->created_at }}</div>
-            <div>{{ $order->status->name }}</div>
-        </a>
+            <a href="{{ route('orders.show', ['id' => $order->id]) }}" class="grid grid-cols-3 col-span-3 hover:bg-slate-300">
+                @isset($order->user->name)
+                    <div>{{ $order->user->name }}</div>
+                @else
+                    <div>{{ $order->guest_name }}</div>
+                @endisset
+                <div>{{ $order->created_at }}</div>
+                <div>{{ $order->status->name }}</div>
+            </a>
         @endforeach
     </div>
 @endsection

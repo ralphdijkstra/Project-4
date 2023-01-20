@@ -28,6 +28,9 @@ class StatusSeeder extends Seeder
             [
                 'name' => 'Bezorgd'
             ],
+            [
+                'name' => 'Geannuleerd'
+            ],
         ];
 
         foreach($statusses as $key => $value){

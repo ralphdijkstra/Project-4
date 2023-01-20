@@ -1,3 +1,10 @@
+@extends('layouts.dashboard')
+
+@section('title')
+    Delete
+@endsection
+
+@section('content')
 <form action="{{ route('products.destroy', ['product' => $product->id]) }}" method="post">
     @csrf
     @method('DELETE')
@@ -9,3 +16,4 @@
         <a href="{{ route('products.index') }}" class="btn btn-secondary">Cancel</a>
     </div>
 </form>
+@endsection

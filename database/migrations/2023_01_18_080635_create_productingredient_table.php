@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('productingredient', function (Blueprint $table) {
+        Schema::create('product_ingredient', function (Blueprint $table) {
             $table->foreignId('product_id')->constrained();
             $table->foreignId('ingredient_id')->constrained();
-            $table->timestamps();
         });
     }
 
