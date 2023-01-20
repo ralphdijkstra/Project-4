@@ -61,6 +61,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             ProductSeeder::class,
             IngredientSeeder::class,
+            Product_IngredientSeeder::class,
             StatusSeeder::class,
         ]);
     }

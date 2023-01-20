@@ -14,7 +14,7 @@
             </div>
             @foreach (session('cart') as $id => $details)
                 <?php $total += $details['price'] * $details['quantity'];
-                $x++; ?>
+                $x++; $key = $details['id'] - 1; ?>
                 <div class="grid grid-cols-7 py-3">
                     <div>{{ $details['name'] }}</div>
                     <div>
@@ -45,8 +45,16 @@
                     <div>{{ $details['quantity'] }}</div>
                     <div>{{ $details['size'] }} cm</div>
                     <div>
-                        @foreach ($details['ingredients'] as $ingredient)
-                            Toevoegen {{ $ingredient }}
+                        @foreach ($ingredients as $ingredient)
+                            @if ($products[$key]->ingredients->contains($ingredient))
+                                @if (!in_array($ingredient->id, $details['ingredients']))
+                                    Verwijderen {{ $ingredient->name }} <br>
+                                @endif
+                            @else
+                                @if (in_array($ingredient->id, $details['ingredients']))
+                                    Toevoegen {{ $ingredient->name }} <br>
+                                @endif
+                            @endif
                         @endforeach
                     </div>
                     <div>€ {{ number_format($price * $details['quantity'], 2) }}</div>
@@ -106,8 +114,10 @@
                                         <div>
                                             <label class="block" for="ingredients">Ingredients:</label>
                                             <select class="mb-5" name="ingredients[]" id="ingredients" multiple>
-                                                @foreach ($details['ingredients'] as $ingredient)
-                                                <option value="{{ $ingredient }}" selected>{{ $ingredient }}</option>
+                                                @foreach ($ingredients as $ingredient)
+                                                    <option value="{{ $ingredient->id }}"
+                                                        @if (in_array($ingredient->id, $details['ingredients'])) selected @endif>
+                                                        {{ $ingredient->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

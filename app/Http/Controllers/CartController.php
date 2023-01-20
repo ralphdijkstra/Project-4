@@ -155,7 +155,7 @@ class CartController extends Controller
         $collection = collect();
 
         foreach (session('cart') as $key => $value) {
-            if ($value['name'] == $request->name && $value['size'] == $request->size && $key != $request->id) {
+            if ($value['name'] == $request->name && $value['size'] == $request->size && $value['ingredients'] == $request->ingredients && $key != $request->id) {
                 $collection->push(
                     [
                         "id" => $value['id'],
@@ -163,6 +163,7 @@ class CartController extends Controller
                         "quantity" => $value['quantity'] + $request->quantity,
                         "price" => $value['price'],
                         "size" => $value['size'],
+                        "ingredients" => $value['ingredients'],
                     ]
                 );
                 $x = 1;
@@ -175,6 +176,7 @@ class CartController extends Controller
                         "quantity" => $value['quantity'],
                         "price" => $value['price'],
                         "size" => $value['size'],
+                        "ingredients" => $value['ingredients'],
                     ]
                 );
             } else {
@@ -185,6 +187,7 @@ class CartController extends Controller
                         "quantity" => $request->quantity,
                         "price" => $value['price'],
                         "size" => $request->size,
+                        "ingredients" => $request->ingredients,
                     ]
                 );
             }

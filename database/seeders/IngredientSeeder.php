@@ -17,29 +17,24 @@ class IngredientSeeder extends Seeder
     {
         $ingredients = [
             [
-                'name' => 'Kaas',
+                'name' => 'Mozzarella kaas',
                 'image' => '',
                 'price' => '0.99',
             ],
             [
-                'name' => 'Tomaat',
+                'name' => 'Gouda kaas',
                 'image' => '',
                 'price' => '0.99',
             ],
             [
-                'name' => 'Salami',
+                'name' => 'Cheddar kaas',
                 'image' => '',
-                'price' => '1.99',
+                'price' => '0.99',
             ],
             [
-                'name' => 'Doner',
+                'name' => 'Zachte franse kaas',
                 'image' => '',
-                'price' => '1.99',
-            ],
-            [
-                'name' => 'Pepperoni',
-                'image' => '',
-                'price' => '1.99',
+                'price' => '0.99',
             ],
             [
                 'name' => 'Tomatensaus',
@@ -47,12 +42,52 @@ class IngredientSeeder extends Seeder
                 'price' => '0.99',
             ],
             [
-                'name' => 'Kip',
+                'name' => 'Pizzakruiden',
                 'image' => '',
-                'price' => '1.99',
+                'price' => '0.99',
+            ],
+            [
+                'name' => 'Champignons',
+                'image' => '',
+                'price' => '0.99',
+            ],
+            [
+                'name' => 'Pepperoni',
+                'image' => '',
+                'price' => '0.99',
+            ],
+            [
+                'name' => 'Salami',
+                'image' => '',
+                'price' => '0.99',
+            ],
+            [
+                'name' => 'Ham',
+                'image' => '',
+                'price' => '0.99',
+            ],
+            [
+                'name' => 'Ananas',
+                'image' => '',
+                'price' => '0.99',
+            ],
+            [
+                'name' => 'Spinazie',
+                'image' => '',
+                'price' => '0.99',
+            ],
+            [
+                'name' => 'Tomaat',
+                'image' => '',
+                'price' => '2.99',
             ],
             [
                 'name' => 'Tonijn',
+                'image' => '',
+                'price' => '2.99',
+            ],
+            [
+                'name' => 'Rode ui',
                 'image' => '',
                 'price' => '2.99',
             ],

@@ -9,4 +9,5 @@ class Product_Ingredient extends Model
 {
     use HasFactory;
     protected $table = 'product_ingredient';
+    public $timestamps = false;
 }
