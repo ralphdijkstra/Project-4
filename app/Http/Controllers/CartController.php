@@ -126,9 +126,7 @@ class CartController extends Controller
                     ]
                 );
 
-                session()->put('cart', $collection);
-
-                return redirect()->back()->with('success', 'Product added to cart successfully!');
+                $x = true;
             } else {
                 $collection->push(
                     [
@@ -143,7 +141,9 @@ class CartController extends Controller
             }
         }
 
-        $collection->push($new_product);
+        if (!isset($x)) {
+            $collection->push($new_product);
+        }
 
         session()->put('cart', $collection);
 
@@ -167,8 +167,7 @@ class CartController extends Controller
                     ]
                 );
                 $x = 1;
-            }
-            else if ($key != $request->id) {
+            } else if ($key != $request->id) {
                 $collection->push(
                     [
                         "id" => $value['id'],
@@ -193,7 +192,7 @@ class CartController extends Controller
             }
         }
 
-        if(isset($x)){
+        if (isset($x)) {
             $collection->forget($request->id);
         }
 
