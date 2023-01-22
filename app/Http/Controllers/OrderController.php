@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingredient;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatus;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,8 +46,7 @@ class OrderController extends Controller
         if (Auth::check()) {
             $user = Auth::user()->id;
             $order->user_id = $user;
-        }
-        else {
+        } else {
             $order->guest_name = $request->guest_name;
         }
         $order->address = $request->address;
@@ -55,12 +56,17 @@ class OrderController extends Controller
         $order->save();
 
         foreach (session('cart') as $key => $value) {
+            $product = Product::find($value['id']);
             $orderitem = new OrderItem();
             $orderitem->order_id = $order->id;
             $orderitem->product_id = $value['id'];
             $orderitem->size = $value['size'];
             $orderitem->quantity = $value['quantity'];
             $orderitem->price = $value['price'];
+            foreach ($value['ingredients'] as $key => $ingredient) {
+                $i = Ingredient::find($ingredient);
+                $orderitem->ingredients = $orderitem->ingredients . " " . $i->id; 
+            }
             $orderitem->save();
         }
 

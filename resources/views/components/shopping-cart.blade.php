@@ -8,7 +8,7 @@
                 <div class="font-bold">Price</div>
                 <div class="font-bold">Quantity</div>
                 <div class="font-bold">Size</div>
-                <div class="font-bold">Veranderingen</div>
+                <div class="font-bold">Changes</div>
                 <div class="font-bold">Subtotal</div>
                 <div></div>
             </div>
@@ -48,11 +48,11 @@
                         @foreach ($ingredients as $ingredient)
                             @if ($products[$key]->ingredients->contains($ingredient))
                                 @if (!in_array($ingredient->id, $details['ingredients']))
-                                    Verwijderen {{ $ingredient->name }} <br>
+                                <i class="fa fa-minus"></i> {{ $ingredient->name }} <br>
                                 @endif
                             @else
                                 @if (in_array($ingredient->id, $details['ingredients']))
-                                    Toevoegen {{ $ingredient->name }} <br>
+                                    <i class="fa fa-plus"></i> {{ $ingredient->name }} <br>
                                 @endif
                             @endif
                         @endforeach

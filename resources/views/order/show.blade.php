@@ -21,11 +21,12 @@
             <div>Status: {{ $order->status->name }}</div>
         </div>
         <div class="text-xl font-bold">Order Items</div>
-        <div class="grid grid-cols-5 py-5">
+        <div class="grid grid-cols-6 py-5">
             <div class="font-bold">Name</div>
             <div class="font-bold">Price</div>
             <div class="font-bold">Size</div>
             <div class="font-bold">Quantity</div>
+            <div class="font-bold">Ingredients</div>
             <div class="font-bold">Subtotal</div>
             <?php $total = 0; ?>
             @foreach ($orderitems as $item)
@@ -35,6 +36,7 @@
                 <div>€ {{ number_format($item->price, 2) }}</div>
                 <div>{{ $item->size }} cm</div>
                 <div>{{ $item->quantity }}</div>
+                 <div>{{ $item->ingredients }}</div> {{-- SPLODE MAKEN OP NUMMER EN DAN UIT DATABASE HALEN --}}
                 <div>€ {{ number_format($subtotal, 2) }}</div>
             @endforeach
         </div>

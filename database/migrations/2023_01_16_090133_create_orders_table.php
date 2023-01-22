@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('size');
             $table->integer('quantity');
             $table->decimal('price');
+            $table->string('ingredients');
             $table->foreignId('order_id')->constrained();
             $table->timestamps();
         });
