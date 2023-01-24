@@ -16,8 +16,8 @@
                 <?php $total += $details['price'] * $details['quantity'];
                 $x++; $key = $details['id'] - 1; ?>
                 <div class="grid grid-cols-7 py-3">
-                    <div>{{ $details['name'] }}</div>
-                    <div>
+                    <div class="my-auto">{{ $details['name'] }}</div>
+                    <div class="my-auto">
                         @switch($details['size'])
                             @case(25)
                                 <?php $price = $details['price'] - 1.5; ?>
@@ -42,9 +42,9 @@
                             @default
                         @endswitch
                     </div>
-                    <div>{{ $details['quantity'] }}</div>
-                    <div>{{ $details['size'] }} cm</div>
-                    <div>
+                    <div class="my-auto">{{ $details['quantity'] }}</div>
+                    <div class="my-auto">{{ $details['size'] }} cm</div>
+                    <div class="my-auto">
                         @foreach ($ingredients as $ingredient)
                             @if ($products[$key]->ingredients->contains($ingredient))
                                 @if (!in_array($ingredient->id, $details['ingredients']))
@@ -57,8 +57,8 @@
                             @endif
                         @endforeach
                     </div>
-                    <div>€ {{ number_format($price * $details['quantity'], 2) }}</div>
-                    <div class="flex">
+                    <div class="my-auto">€ {{ number_format($price * $details['quantity'], 2) }}</div>
+                    <div class="flex my-auto">
                         <form action="{{ route('cart.remove', ['id' => $id]) }}" method="POST">
                             @csrf @method('delete')
                             <input class="font-bold text-red-500" type="submit" value="Verwijder" />

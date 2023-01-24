@@ -66,7 +66,7 @@ class OrderController extends Controller
             $orderitem->price = $value['price'];
             foreach ($value['ingredients'] as $key => $ingredient) {
                 $i = Ingredient::find($ingredient);
-                $orderitem->ingredients = $orderitem->ingredients . " " . $i->id; 
+                $orderitem->ingredients = $orderitem->ingredients . " " . $i->id;
             }
             $orderitem->save();
         }
@@ -84,9 +84,10 @@ class OrderController extends Controller
      */
     public function show($id)
     {
+        $ingredients = Ingredient::all();
         $order = Order::find($id);
         $orderitems = OrderItem::where('order_id', $id)->get();
-        return view('order.show')->with('order', $order)->with('orderitems', $orderitems);
+        return view('order.show')->with('order', $order)->with('orderitems', $orderitems)->with('ingredients', $ingredients);
     }
 
     /**

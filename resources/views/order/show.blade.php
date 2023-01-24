@@ -32,12 +32,18 @@
             @foreach ($orderitems as $item)
                 <?php $subtotal = $item->price * $item->quantity;
                 $total += $subtotal; ?>
-                <div>{{ $item->product->name }}</div>
-                <div>€ {{ number_format($item->price, 2) }}</div>
-                <div>{{ $item->size }} cm</div>
-                <div>{{ $item->quantity }}</div>
-                 <div>{{ $item->ingredients }}</div> {{-- SPLODE MAKEN OP NUMMER EN DAN UIT DATABASE HALEN --}}
-                <div>€ {{ number_format($subtotal, 2) }}</div>
+                <div class="my-auto">{{ $item->product->name }}</div>
+                <div class="my-auto">€ {{ number_format($item->price, 2) }}</div>
+                <div class="my-auto">{{ $item->size }} cm</div>
+                <div class="my-auto">{{ $item->quantity }}</div>
+                <?php $product_ingredients = explode(' ', $item->ingredients);
+                $product_ingredients = array_splice($product_ingredients, 1); ?>
+                <div class="my-auto">
+                    @foreach ($product_ingredients as $ingredient)
+                        {{ $ingredients[$ingredient - 1]->name }} <br>
+                    @endforeach
+                </div>
+                <div class="my-auto">€ {{ number_format($subtotal, 2) }}</div>
             @endforeach
         </div>
         <div>Total: € {{ number_format($total, 2) }}</div>
