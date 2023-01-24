@@ -31,6 +31,7 @@ class OrderController extends Controller
      */
     public function create()
     {
+        // session()->flush('cart');
         return view('order.create');
     }
 

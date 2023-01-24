@@ -104,7 +104,7 @@ class CartController extends Controller
         $new_product = [
             "id" => $product->id,
             "name" => $product->name,
-            "quantity" => 1,
+            "quantity" => $request->quantity,
             "price" => $product->price,
             "size" => $request->size,
             "ingredients" => $request->ingredients,
@@ -114,7 +114,7 @@ class CartController extends Controller
 
         foreach (session('cart') as $value) {
             if ($value['name'] == $new_product['name'] && $value['size'] == $new_product['size'] && $value['ingredients'] == $new_product['ingredients']) {
-                $new_quantity = $value['quantity'] + 1;
+                $new_quantity = $value['quantity'] + $request->quantity;
                 $collection->push(
                     [
                         "id" => $value['id'],
