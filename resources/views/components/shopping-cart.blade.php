@@ -7,9 +7,9 @@
             $x++;
             $key = $details['id'] - 1; ?>
             <div class="my-3">
-                <div class="flex">
+                <div class="flex px-1 dark:text-white">
                     <div class="w-[10%] font-bold">{{ $details['quantity'] }} x</div>
-                    <div class="w-[75%] flex flex-col">
+                    <div class="w-[70%] flex flex-col">
                         <div class="font-bold">{{ $details['name'] }}</div>
                         <div><span class="font-bold">Size:</span> {{ $details['size'] }} cm</div>
                         <div>
@@ -125,42 +125,64 @@
             <hr>
         @endforeach
         <form action="{{ route('orders.store') }}" method="POST">
-            <div class="text-xl font-bold py-3">Bezorgen naar:</div>
+            <div class="py-3 dark:text-white">
+                <p class="text-xl font-bold">Pizza Points:</p>
+                @auth
+                    <p>With this order you collect {{ round($total * 10, 0) }} Pizza Points!</p>
+                    <input type="hidden" name="pizzapoints" value="{{ round($total * 10, 0) }}">
+                @else
+                    <p>Log in to collect {{ round($total * 10, 0) }} Pizza Points!</p>
+                @endauth
+            </div>
+            <hr>
+            <div class="text-xl font-bold pt-3 dark:text-white">Deliver To:</div>
             @auth
                 <div class="py-3">
-                    <div>
-                        Address: <input type="text" name="address" id="address"
-                            value="{{ Auth::user()->person->address }}" readonly>
+                    <div class="flex justify-between items-center dark:text-white pb-1">
+                        <p>Name:</p>
+                        <input class="bg-transparent" type="text" name="guest_name" id="guest_name"
+                            value="{{ Auth::user()->person->first_name }}">
                     </div>
-                    <div>
-                        Postal code: <input type="text" name="postal_code" id="postal_code"
-                            value="{{ Auth::user()->person->postal_code }}" readonly>
+                    <div class="flex justify-between items-center dark:text-white pb-1">
+                        <p>Adress:</p>
+                        <input class="bg-transparent" type="text" name="address" id="address"
+                            value="{{ Auth::user()->person->address }}">
                     </div>
-                    <div>
-                        City: <input type="text" name="city" id="city" value="{{ Auth::user()->person->city }}"
-                            readonly>
+                    <div class="flex justify-between items-center dark:text-white pb-1">
+                        <p>Postal Code:</p>
+                        <input class="bg-transparent" type="text" name="postal_code" id="postal_code"
+                            value="{{ Auth::user()->person->postal_code }}">
+                    </div>
+                    <div class="flex justify-between items-center dark:text-white pb-1">
+                        <p>City:</p>
+                        <input class="bg-transparent" type="text" name="city" id="city"
+                            value="{{ Auth::user()->person->city }}">
                     </div>
                 </div>
             @else
                 <div class="py-3">
-                    <div>
-                        Name: <input type="text" name="guest_name" id="guest_name">
+                    <div class="flex justify-between items-center dark:text-white pb-1">
+                        <p>Name:</p>
+                        <input class="bg-transparent" type="text" name="guest_name" id="guest_name">
                     </div>
-                    <div>
-                        Address: <input type="text" name="address" id="address">
+                    <div class="flex justify-between items-center dark:text-white pb-1">
+                        <p>Adress:</p>
+                        <input class="bg-transparent" type="text" name="address" id="address">
                     </div>
-                    <div>
-                        Postal code: <input type="text" name="postal_code" id="postal_code">
+                    <div class="flex justify-between items-center dark:text-white pb-1">
+                        <p>Postal Code:</p>
+                        <input class="bg-transparent" type="text" name="postal_code" id="postal_code">
                     </div>
-                    <div>
-                        City: <input type="text" name="city" id="city">
+                    <div class="flex justify-between items-center dark:text-white pb-1">
+                        <p>City:</p>
+                        <input class="bg-transparent" type="text" name="city" id="city">
                     </div>
                 </div>
             @endauth
             @csrf
             <input type="submit" class="btn w-full py-3 rounded-2xl"
-                @if ($x > 1) value="{{ $x }} Items | € {{ $total }} Afrekenen"
-                        @else value="{{ $x }} Item | € {{ $total }} Afrekenen" @endif>
+                @if ($x > 1) value="{{ $x }} Items | € {{ number_format($total, 2) }} Afrekenen"
+                        @else value="{{ $x }} Item | € {{ number_format($total, 2) }} Afrekenen" @endif>
         </form>
     @endif
 </div>

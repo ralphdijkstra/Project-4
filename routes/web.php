@@ -39,11 +39,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/menu', function () {
-    return view('menu');
-})->middleware(['auth', 'verified'])->name('menu');
+})->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -52,7 +48,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::controller(CartController::class)->group(function () {
-    Route::get('/cart', 'index')->name('cart');
     Route::get('/add-to-cart/{id}', 'addToCart')->name('cart.add');
     Route::patch('/update-cart', 'refresh')->name('cart.refresh');
     Route::delete('/remove-from-cart/{id}', 'destroy')->name('cart.remove');

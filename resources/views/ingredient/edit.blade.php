@@ -11,7 +11,7 @@
     @error('name')
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror
-    <div>Price: <input type="text" name="price" id="price" value="{{ $ingredient->price }}"></div>
+    <div>Price: <input type="text" name="price" id="price" step="any" value="{{ $ingredient->price }}"></div>
     @error('price')
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror

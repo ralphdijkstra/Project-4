@@ -63,7 +63,6 @@ class DatabaseSeeder extends Seeder
             IngredientSeeder::class,
             Product_IngredientSeeder::class,
             StatusSeeder::class,
-            IngredientSeeder::class,
             UnitSeeder::class,
         ]);
     }

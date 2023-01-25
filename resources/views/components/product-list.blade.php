@@ -1,15 +1,15 @@
 <div class="p-3">
     <div class="grid 2xl:grid-cols-4 xl:grid-cols-3 grid-cols-2">
         @foreach ($products as $product)
-            <div class="bg-white m-2 rounded-lg px-1 py-2">
+            <div class="bg-white dark:bg-slate-600 dark:text-white m-2 rounded-lg px-1 py-2">
                 <form action="{{ route('cart.add', [$product->id]) }}">
                     @csrf
                     <img src="https://static.vecteezy.com/system/resources/previews/009/384/620/original/fresh-pizza-and-pizza-box-clipart-design-illustration-free-png.png"
-                        alt="" onclick="openModal('modal{{ $product->id }}')">
+                        alt="" onclick="openModal('modalProduct{{ $product->id }}')">
                     <p class="font-bold">{{ $product->name }}</p>
                     <p>€ {{ number_format($product->price, 2) }}</p>
                     <p class="line-clamp-2 text-sm">{{ $product->description }}</p>
-                    <select class="appearance-none w-full rounded bg-gray-100 my-1 cursor-pointer" name="size"
+                    <select class="appearance-none w-full rounded bg-gray-100 dark:bg-slate-700 my-1 cursor-pointer" name="size"
                         id="size">
                         <option value="25">(25 cm) Small -€ 1,50</option>
                         <option value="29" selected>(29 cm) Medium</option>
@@ -18,7 +18,7 @@
                     </select>
                     <div class="flex">
                         <select name="quantity" id="quantity"
-                            class="w-[40%] text-md rounded bg-gray-100 cursor-pointer">
+                            class="w-[40%] text-md rounded bg-gray-100 dark:bg-slate-700 cursor-pointer">
                             @for ($i = 1; $i < 11; $i++)
                                 <option value="{{ $i }}">{{ $i }}</option>
                             @endfor
@@ -31,15 +31,15 @@
                         @endif
                     @endforeach
                 </form>
-                <div id="modal{{ $product->id }}"
+                <div id="modalProduct{{ $product->id }}"
                     class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto px-4 modal">
-                    <div class="relative top-28 mx-auto shadow-xl rounded-md bg-gray-200 max-w-lg">
+                    <div class="relative top-28 mx-auto shadow-xl rounded-md bg-gray-200 dark:bg-slate-700 max-w-lg">
 
                         <!-- Modal header -->
                         <div
-                            class="flex justify-between items-center bg-blue-500 text-white text-xl rounded-t-md px-4 py-2">
+                            class="flex justify-between items-center bg-blue-500 dark:bg-slate-800 text-white text-xl rounded-t-md px-4 py-2">
                             <h3>{{ $product->name }}</h3>
-                            <button onclick="closeModal('modal{{ $product->id }}')">x</button>
+                            <button onclick="closeModal('modalProduct{{ $product->id }}')">x</button>
                         </div>
 
                         <!-- Modal body -->
@@ -49,23 +49,23 @@
                                 <img class="w-[70%] mx-auto"
                                     src="https://static.vecteezy.com/system/resources/previews/009/384/620/original/fresh-pizza-and-pizza-box-clipart-design-illustration-free-png.png"
                                     alt="">
-                                <div class="rounded-lg bg-white m-3 p-3">
+                                <div class="rounded-lg bg-white dark:bg-slate-800 m-3 p-3">
                                     <p class="text-xl font-bold">{{ $product->name }}</p>
                                     <p>{{ $product->description }}</p>
                                 </div>
-                                <div class="rounded-lg bg-white m-3 p-3 flex items-center">
+                                <div class="rounded-lg bg-white dark:bg-slate-800 m-3 p-3 flex items-center">
                                     <p class="text-xl font-bold mr-5">Size</p>
-                                    <select class="appearance-none w-full rounded bg-gray-100 my-1 cursor-pointer"
+                                    <select class="appearance-none w-full rounded bg-transparent my-1 cursor-pointer"
                                         name="size" id="size">
-                                        <option value="25">(25 cm) Small -€ 1,50</option>
-                                        <option value="29" selected>(29 cm) Medium</option>
-                                        <option value="35">(35 cm) Large +€ 1,50</option>
-                                        <option value="40">(40 cm) XXL +€ 3,00</option>
+                                        <option class="dark:text-black" value="25">(25 cm) Small -€ 1,50</option>
+                                        <option class="dark:text-black" value="29" selected>(29 cm) Medium</option>
+                                        <option class="dark:text-black" value="35">(35 cm) Large +€ 1,50</option>
+                                        <option class="dark:text-black" value="40">(40 cm) XXL +€ 3,00</option>
                                     </select>
                                 </div>
-                                <div class="rounded-lg bg-white m-3 p-3">
+                                <div class="rounded-lg bg-white dark:bg-slate-800 m-3 p-3">
                                     <p class="text-xl font-bold mr-5">Ingredients</p>
-                                    <select class="w-full" name="ingredients[]" id="ingredients" multiple>
+                                    <select class="w-full bg-transparent" name="ingredients[]" id="ingredients" multiple>
                                         @foreach ($ingredients as $ingredient)
                                             <option value="{{ $ingredient->id }}"
                                                 @if ($product->ingredients->contains($ingredient)) selected @endif>
@@ -88,7 +88,7 @@
                             </div>
                             <div>
                                 <button class="btn btn-warning" type="button"
-                                    onclick="closeModal('modal{{ $product->id }}')">Cancel</button>
+                                    onclick="closeModal('modalProduct{{ $product->id }}')">Cancel</button>
                                 <input class="btn" type="submit" value="Confirm">
                             </div>
                             </form>

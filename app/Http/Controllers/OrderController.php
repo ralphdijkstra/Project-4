@@ -6,6 +6,7 @@ use App\Models\Ingredient;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatus;
+use App\Models\PizzaPoint;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +48,10 @@ class OrderController extends Controller
         if (Auth::check()) {
             $user = Auth::user()->id;
             $order->user_id = $user;
+            $pizzapoint = new PizzaPoint();
+            $pizzapoint->person_id = Auth::user()->person->id;
+            $pizzapoint->pizza_points = $request->pizzapoints;
+            $pizzapoint->save();
         } else {
             $order->guest_name = $request->guest_name;
         }

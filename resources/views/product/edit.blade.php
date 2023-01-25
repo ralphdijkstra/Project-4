@@ -19,7 +19,7 @@
     @error('image')
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror
-    <div>Price: <input type="number" name="price" id="price" value="{{ $product->price }}"></div>
+    <div>Price: <input type="number" name="price" id="price" step="any" value="{{ $product->price }}"></div>
     @error('price')
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror
