@@ -23,12 +23,11 @@ class PersonSeeder extends Seeder
         $role = Role::create(['name' => 'admin']);
         $permission = Permission::create(['name' => 'admin']);
         $role->givePermissionTo($permission);
-        $first = "admin";
-        $last = "";
+        $name = "admin";
         $email = "admin@localhost";
-        $user = User::factory(['name' => $first, 'email' => $email])->create();
+        $user = User::factory(['name' => $name, 'email' => $email])->create();
         $user->assignRole('admin');
-        Person::factory(['first_name' => $first, 'last_name' => $last, 'id' => $user->id])->create();
+        Person::factory(['id' => $user->id])->create();
 
         $roles = ['balie', 'bereiding', 'bezorger', 'management'];
 

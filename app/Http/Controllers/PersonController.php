@@ -15,9 +15,13 @@ class PersonController extends Controller
      */
     public function index()
     {
-        $persons = Person::orderBy('created_at', 'desc')->get();
+        $persons_count = count(Person::all());
+        $persons = Person::orderBy('created_at', 'asc')->paginate(25);
+        $roles = Role::all();
         return view('person.index', [
-            'persons' => $persons
+            'persons' => $persons,
+            'persons_count' => $persons_count,
+            'roles' => $roles
         ]);
     }
 
@@ -28,7 +32,6 @@ class PersonController extends Controller
      */
     public function create()
     {
-
     }
 
     /**
@@ -78,8 +81,8 @@ class PersonController extends Controller
     public function update(Request $request, Person $person)
     {
         $user = $person->user;
-        $person->update($request->except('roles'));
-        $user->syncRoles($request->roles);
+        $person->update($request->except('roles', 'name', 'email'));
+        $user->syncRoles($request->roles)->update($request->only('name', 'email'));
         return redirect()->route('persons.index');
     }
 
@@ -92,5 +95,17 @@ class PersonController extends Controller
     public function destroy(Person $person)
     {
         //
+    }
+
+    public function assignrole(Person $person, Role $role)
+    {
+        $person->user()->first()->assignRole($role);
+        return redirect()->back();
+    }
+
+    public function removerole(Person $person, Role $role)
+    {
+        $person->user()->first()->removeRole($role);
+        return redirect()->back();
     }
 }

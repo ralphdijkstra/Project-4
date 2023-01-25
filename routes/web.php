@@ -81,6 +81,8 @@ Route::middleware(['role:management|admin'])->group(function () {
 Route::middleware(['role:management|admin'])->group(function () {
     Route::resource('persons', PersonController::class);
     Route::resource('users', UserController::class);
+    Route::get('assignrole/person/{person}/role/{role}', [PersonController::class, 'assignrole'])->name('assignrole');
+    Route::get('removerole/person/{person}/role/{role}', [PersonController::class, 'removerole'])->name('removerole');
 });
 
 require __DIR__.'/auth.php';
