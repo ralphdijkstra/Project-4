@@ -27,7 +27,7 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="w-[15%] font-bold text-right">
+                    <div class="w-[20%] font-bold text-right">
                         @switch($details['size'])
                             @case(25)
                                 <?php $price = $details['price'] - 1.5; ?>
