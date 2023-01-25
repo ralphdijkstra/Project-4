@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\UnitController;
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProductController;
@@ -60,9 +62,11 @@ Route::controller(OrderController::class)->group(function () {
     Route::patch('/orders/{id}', 'update')->name('orders.update');
 });
 
+Route::get('ingredients/{id}/delete', [IngredientController::class, 'delete'])->name('ingredients.delete');
 Route::resource('ingredients', IngredientController::class);
 
-
+Route::get('units/{id}/delete', [UnitController::class, 'delete'])->name('units.delete');
+Route::resource('units', UnitController::class);
 
 Route::get('products/{id}/delete', [ProductController::class, 'delete'])->name('products.delete');
 Route::resource('products', ProductController::class);

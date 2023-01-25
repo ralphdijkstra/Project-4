@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
 
 class IngredientController extends Controller
 {
@@ -14,9 +16,15 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        //
+        $ingredients = Ingredient::all();
+        return view('ingredient.index')->with('ingredients', $ingredients);
     }
+    public function delete($id)
+    {
+        $ingredient = Ingredient::find($id);
+        return view('ingredient.delete')->with('ingredient', $ingredient);
 
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -24,7 +32,7 @@ class IngredientController extends Controller
      */
     public function create()
     {
-        //
+        return view('ingredient.create');
     }
 
     /**
@@ -35,7 +43,20 @@ class IngredientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'unique:ingredients', 'max:20'],
+            'price' => ['required', 'max:234'],
+            'image' => ['required', 'max:234'],
+
+        ]);
+    
+        $ingredient = new Ingredient();
+        $ingredient->name = $request->name;
+        $ingredient->price = $request->price;
+        $ingredient->image = $request->image;
+        $ingredient->save();
+    
+        return redirect()->route('ingredients.index');
     }
 
     /**
@@ -55,9 +76,10 @@ class IngredientController extends Controller
      * @param  \App\Models\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ingredient $ingredient)
+    public function edit($id)
     {
-        //
+        $ingredient = Ingredient::find($id);
+        return view('ingredient.edit')->with('ingredient', $ingredient);
     }
 
     /**
@@ -69,7 +91,16 @@ class IngredientController extends Controller
      */
     public function update(Request $request, Ingredient $ingredient)
     {
-        //
+        $request->validate([
+            'name' => ['required', Rule::unique('ingredients')->ignore($ingredient), 'max:20'],
+            'price' => ['required', 'max:234'],
+            'image' => [ 'max:234'],
+
+        ]);
+    
+        $ingredient->update($request->only(['name', 'image', 'price']));
+        return redirect()->route('ingredients.index')->with('success', 'Product updated successfully');
+
     }
 
     /**
@@ -80,6 +111,7 @@ class IngredientController extends Controller
      */
     public function destroy(Ingredient $ingredient)
     {
-        //
+        $ingredient->delete();
+        return redirect()->route('ingredients.index')->with('success', 'Product deleted successfully');
     }
 }
