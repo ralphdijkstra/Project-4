@@ -111,7 +111,8 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product){
+    public function destroy(Product $product)
+    {
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Product deleted successfully');
     }
@@ -120,92 +121,5 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         return view('product.delete')->with('product', $product);
-
-    }
-
-    public function cart()
-    {
-        return view('cart');
-    }
-
-    public function addToCart($id, Request $request)
-    {
-        $product = Product::find($id);
-
-        $cart = session()->get('cart');
-
-
-        $x = 1;
-
-        if (!$cart) {
-            $cart = [
-                1 => [
-                    "id" => $product->id,
-                    "name" => $product->name,
-                    "quantity" => 1,
-                    "price" => $product->price,
-                    "size" => $request->size,
-                ]
-            ];
-            session()->put('cart', $cart);
-            return redirect()->back()->with('success', 'Product added to cart successfully!');
-        }
-
-        $c = count($cart) + 1;
-
-        foreach (session('cart') as $key => $value) {
-            if ($value['name'] === $product->name) {
-                if ($value['size'] === $request->size) {
-                    $cart[$x]['quantity']++;
-                    session()->put('cart', $cart);
-                    return redirect()->back()->with('success', 'Product added to cart successfully!');
-                }
-            }
-            $x++;
-        }
-        $cart[$c] = [
-            "id" => $product->id,
-            "name" => $product->name,
-            "quantity" => 1,
-            "price" => $product->price,
-            "size" => $request->size,
-        ];
-        session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
-    }
-
-    public function refresh(Request $request)
-    {
-        $x = 1;
-
-        $cart = session()->get('cart');
-
-        $cart[$request->id]["quantity"] = $request->quantity;
-        $cart[$request->id]["size"] = $request->size;
-
-        foreach (session('cart') as $key => $value) {
-            if ($x <> $request->id) {
-                if ($value['name'] === $cart[$request->id]["name"]) {
-                    if ($value['size'] === $request->size) {
-                        $cart[$x]['quantity'] += $request->quantity;
-                        unset($cart[$request->id]);
-                    }
-                }
-            }
-            $x++;
-        }
-
-        session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product updated from cart successfully!');
-    }
-
-    public function remove(Request $request)
-    {
-        $cart = session()->get('cart');
-        if (isset($cart[$request->id])) {
-            unset($cart[$request->id]);
-            session()->put('cart', $cart);
-        }
-        return redirect()->back()->with('success', 'Product removed from cart successfully!');
     }
 }

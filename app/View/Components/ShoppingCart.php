@@ -2,10 +2,14 @@
 
 namespace App\View\Components;
 
+use App\Models\Ingredient;
+use App\Models\Product;
 use Illuminate\View\Component;
 
 class ShoppingCart extends Component
 {
+    public $products;
+    public $ingredients;
     /**
      * Create a new component instance.
      *
@@ -13,7 +17,8 @@ class ShoppingCart extends Component
      */
     public function __construct()
     {
-        //
+        $this->products = Product::all();
+        $this->ingredients = Ingredient::all();
     }
 
     /**

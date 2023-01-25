@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProductController;
@@ -31,7 +32,9 @@ Route::get('/', function () {
     // the component is defined in app\View\Components\ProductList.php
     // the component is rendered in the welcome view with the following line:
     // <x-product-list />
-    return view('welcome', ['products' => ['pizza', 'pasta', 'salad', 'dessert', 'drinks']]);
+    // return view('welcome', ['products' => ['pizza', 'pasta', 'salad', 'dessert', 'drinks']]);
+
+    return view('dashboard');
 });
 
 Route::get('/dashboard', function () {
@@ -46,10 +49,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/cart', [ProductController::class, 'cart'])->name('cart');
-    Route::get('/add-to-cart/{id}', [ProductController::class, 'addToCart'])->name('product.addtocart');
-    Route::patch('update-cart', [ProductController::class, 'refresh'])->name('product.refresh');
-    Route::delete('remove-from-cart', [ProductController::class, 'remove'])->name('product.remove');
+});
+
+Route::controller(CartController::class)->group(function () {
+    Route::get('/cart', 'index')->name('cart');
+    Route::get('/add-to-cart/{id}', 'addToCart')->name('cart.add');
+    Route::patch('/update-cart', 'refresh')->name('cart.refresh');
+    Route::delete('/remove-from-cart/{id}', 'destroy')->name('cart.remove');
 });
 
 Route::controller(OrderController::class)->group(function () {

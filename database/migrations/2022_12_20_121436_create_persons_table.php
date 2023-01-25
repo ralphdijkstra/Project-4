@@ -18,10 +18,10 @@ return new class extends Migration
             // for customers and employees
             $table->string('first_name')->nullable();
             $table->string('last_name');
-            $table->string('postal_code')->nullable();
+            $table->string('postal_code');
             // optional for customer
-            $table->string('address')->nullable();
-            $table->string('city')->nullable();
+            $table->string('address');
+            $table->string('city');
             $table->string('country')->nullable();
             $table->string('phone')->nullable();
             $table->date('date_of_birth')->nullable();

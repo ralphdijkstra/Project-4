@@ -1,15 +1,14 @@
-@extends('layouts.dashboard')
+@extends('layouts.order')
 
 @section('title')
     Order
 @endsection
 
-@section('content')
-    @if (session()->has('success'))
-    <div class="m-1 p-3 text-green-500 bg-green-200 rounded-md">
-            {{ Session::get('success') }}
-    </div>
-    @endif
-
+@section('product-list')    
     <x-product-list />
+@endsection
+@section('shopping-cart')
+    <p class="text-xl font-bold">Details Order</p>
+    <hr class="h-px my-1 bg-gray-200 border-0">
+    <x-shopping-cart />
 @endsection
