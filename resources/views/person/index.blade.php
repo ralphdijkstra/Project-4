@@ -1,6 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
+@canany(['manage activiteiten', 'admin'])
     <div class="mb-36">
         <div class="flex justify-between items-center h-16 border border-gray-300">
             <div class="flex items-center w-[20%]">
@@ -22,7 +23,7 @@
                 <input type="checkbox" class="border-blue-500 rounded-sm m-auto">
             </div>
             <div
-                class="flex w-[40%] px-3 border-r border-gray-300 h-full items-center justify-between cursor-pointer hover:bg-gray-100">
+                class="flex w-[25%] px-3 border-r border-gray-300 h-full items-center justify-between cursor-pointer hover:bg-gray-100">
                 <p class="font-bold">Name</p>
                 <i class="fa fa-arrow-up"></i>
             </div>
@@ -36,7 +37,7 @@
                         <input type="checkbox" class="border-blue-500 rounded-sm m-auto">
                     </div>
                     <a href="{{ route('persons.edit', $person) }}"
-                        class="flex w-[40%] px-3 border-r border-gray-300 h-full items-center cursor-pointer hover:bg-gray-100">
+                        class="flex w-[25%] px-3 border-r border-gray-300 h-full items-center cursor-pointer hover:bg-gray-100">
                         <p>{{ $person->user->name }}</p>
                     </a>
                     <div class="flex w-full px-3 h-full items-center">
@@ -89,7 +90,6 @@
             {{ $persons->links() }}
         </div>
     </div>
-    @canany(['manage activiteiten', 'admin'])
     @else
         <p>Je hebt geen rechten om deze pagina te bekijken</p>
     @endcan
