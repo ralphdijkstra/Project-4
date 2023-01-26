@@ -9,8 +9,8 @@
                     <p class="font-bold">{{ $product->name }}</p>
                     <p>€ {{ number_format($product->price, 2) }}</p>
                     <p class="line-clamp-2 text-sm">{{ $product->description }}</p>
-                    <select class="appearance-none w-full rounded bg-gray-100 dark:bg-slate-700 my-1 cursor-pointer" name="size"
-                        id="size">
+                    <select class="appearance-none w-full rounded bg-gray-100 dark:bg-slate-700 my-1 cursor-pointer"
+                        name="size" id="size">
                         <option value="25">(25 cm) Small -€ 1,50</option>
                         <option value="29" selected>(29 cm) Medium</option>
                         <option value="35">(35 cm) Large +€ 1,50</option>
@@ -65,7 +65,8 @@
                                 </div>
                                 <div class="rounded-lg bg-white dark:bg-slate-800 m-3 p-3">
                                     <p class="text-xl font-bold mr-5">Ingredients</p>
-                                    <select class="w-full bg-transparent" name="ingredients[]" id="ingredients" multiple>
+                                    <select class="w-full bg-transparent" name="ingredients[]" id="ingredients"
+                                        multiple>
                                         @foreach ($ingredients as $ingredient)
                                             <option value="{{ $ingredient->id }}"
                                                 @if ($product->ingredients->contains($ingredient)) selected @endif>
@@ -122,46 +123,4 @@
             })
         }
     };
-</script>
-
-<script>
-    function decrement(e) {
-        const btn = e.target.parentNode.parentElement.querySelector(
-            'button[data-action="decrement"]'
-        );
-        const target = btn.nextElementSibling;
-        let value = Number(target.value);
-        if (value != 1) {
-            value--;
-        }
-        target.value = value;
-    }
-
-    function increment(e) {
-        const btn = e.target.parentNode.parentElement.querySelector(
-            'button[data-action="decrement"]'
-        );
-        const target = btn.nextElementSibling;
-        let value = Number(target.value);
-        if (value != 10) {
-            value++;
-        }
-        target.value = value;
-    }
-
-    const decrementButtons = document.querySelectorAll(
-        `button[data-action="decrement"]`
-    );
-
-    const incrementButtons = document.querySelectorAll(
-        `button[data-action="increment"]`
-    );
-
-    decrementButtons.forEach(btn => {
-        btn.addEventListener("click", decrement);
-    });
-
-    incrementButtons.forEach(btn => {
-        btn.addEventListener("click", increment);
-    });
 </script>

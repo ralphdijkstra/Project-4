@@ -89,7 +89,12 @@ class CartController extends Controller
             $collection->push($value);
         }
 
-        session()->put('cart', $collection);
+        if ($collection->isEmpty()) {
+            session()->flush('cart');
+        } else {
+            session()->put('cart', $collection);
+        }
+
 
         return redirect()->back()->with('success', 'Product removed from cart successfully!');
     }
@@ -104,6 +109,7 @@ class CartController extends Controller
         $new_product = [
             "id" => $product->id,
             "name" => $product->name,
+            "description" => $product->description,
             "quantity" => $request->quantity,
             "price" => $product->price,
             "size" => $request->size,
@@ -119,6 +125,7 @@ class CartController extends Controller
                     [
                         "id" => $value['id'],
                         "name" => $value['name'],
+                        "description" => $value['description'],
                         "quantity" => $new_quantity,
                         "price" => $value['price'],
                         "size" => $value['size'],
@@ -132,6 +139,7 @@ class CartController extends Controller
                     [
                         "id" => $value['id'],
                         "name" => $value['name'],
+                        "description" => $value['description'],
                         "quantity" => $value['quantity'],
                         "price" => $value['price'],
                         "size" => $value['size'],
@@ -160,6 +168,7 @@ class CartController extends Controller
                     [
                         "id" => $value['id'],
                         "name" => $value['name'],
+                        "description" => $value['description'],
                         "quantity" => $value['quantity'] + $request->quantity,
                         "price" => $value['price'],
                         "size" => $value['size'],
@@ -172,6 +181,7 @@ class CartController extends Controller
                     [
                         "id" => $value['id'],
                         "name" => $value['name'],
+                        "description" => $value['description'],
                         "quantity" => $value['quantity'],
                         "price" => $value['price'],
                         "size" => $value['size'],
@@ -183,6 +193,7 @@ class CartController extends Controller
                     [
                         "id" => $value['id'],
                         "name" => $value['name'],
+                        "description" => $value['description'],
                         "quantity" => $request->quantity,
                         "price" => $value['price'],
                         "size" => $request->size,

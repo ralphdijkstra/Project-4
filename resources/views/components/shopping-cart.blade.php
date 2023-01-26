@@ -60,48 +60,53 @@
 
                     <div id="modal{{ $id }}"
                         class="fixed hidden z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto px-4 modal">
-                        <div class="relative top-40 mx-auto shadow-xl rounded-md bg-white max-w-sm">
+                        <div
+                            class="relative top-28 mx-auto shadow-xl rounded-md bg-gray-200 dark:bg-slate-700 max-w-lg">
 
                             <!-- Modal header -->
                             <div
-                                class="flex justify-between items-center bg-blue-500 text-white text-xl rounded-t-md px-4 py-2">
+                                class="flex justify-between items-center bg-blue-500 dark:bg-slate-800 text-white text-xl rounded-t-md px-4 py-2">
                                 <h3>{{ $details['name'] }}</h3>
                                 <button onclick="closeModal('modal{{ $id }}')">x</button>
                             </div>
 
                             <!-- Modal body -->
-                            <div class="max-h-48 overflow-y-scroll p-4">
+                            <div class="overflow-y-scroll max-h-96 p-1">
                                 <form method="POST" action="{{ route('cart.refresh') }}">
                                     @csrf
                                     @method('patch')
                                     <input type="hidden" name="id" value="{{ $id }}">
                                     <input type="hidden" name="name" value="{{ $details['name'] }}">
-                                    <div>
-                                        <label class="block" for="quantity">Quantity:</label>
-                                        <input class="mb-5" type="number" min="1" name="quantity"
-                                            id="quantity" value="{{ $details['quantity'] }}">
+                                    <img class="w-[70%] mx-auto"
+                                        src="https://static.vecteezy.com/system/resources/previews/009/384/620/original/fresh-pizza-and-pizza-box-clipart-design-illustration-free-png.png"
+                                        alt="">
+                                    <div class="rounded-lg bg-white dark:bg-slate-800 m-3 p-3">
+                                        <p class="text-xl font-bold">{{ $details['name'] }}</p>
+                                        <p>{{ $details['description'] }}</p>
                                     </div>
-                                    <div>
-                                        <label class="block" for="size">Size:</label>
-                                        <select class="mb-5" name="size" id="size">
-                                            <option value="25" @if ($details['size'] == 25) selected @endif>
-                                                (25 cm)
-                                                Small -€ 1,50
+                                    <div class="rounded-lg bg-white dark:bg-slate-800 m-3 p-3 flex items-center">
+                                        <p class="text-xl font-bold mr-5">Size</p>
+                                        <select
+                                            class="appearance-none w-full rounded bg-transparent my-1 cursor-pointer"
+                                            name="size" id="size">
+                                            <option class="dark:text-black" value="25"
+                                                @if ($details['size'] == 25) selected @endif>(25 cm) Small -€ 1,50
                                             </option>
-                                            <option value="29" @if ($details['size'] == 29) selected @endif>
-                                                (29 cm) Medium
+                                            <option class="dark:text-black" value="29"
+                                                @if ($details['size'] == 29) selected @endif>(29 cm) Medium
                                             </option>
-                                            <option value="35" @if ($details['size'] == 35) selected @endif>
-                                                (35 cm) Large +€ 1,50
+                                            <option class="dark:text-black" value="35"
+                                                @if ($details['size'] == 35) selected @endif>(35 cm) Large +€ 1,50
                                             </option>
-                                            <option value="40" @if ($details['size'] == 40) selected @endif>
-                                                (40 cm) XXL +€ 3,00
+                                            <option class="dark:text-black" value="40"
+                                                @if ($details['size'] == 40) selected @endif>(40 cm) XXL +€ 3,00
                                             </option>
                                         </select>
                                     </div>
-                                    <div>
-                                        <label class="block" for="ingredients">Ingredients:</label>
-                                        <select class="mb-5" name="ingredients[]" id="ingredients" multiple>
+                                    <div class="rounded-lg bg-white dark:bg-slate-800 m-3 p-3">
+                                        <p class="text-xl font-bold mr-5">Ingredients</p>
+                                        <select class="w-full bg-transparent" name="ingredients[]" id="ingredients"
+                                            multiple>
                                             @foreach ($ingredients as $ingredient)
                                                 <option value="{{ $ingredient->id }}"
                                                     @if (in_array($ingredient->id, $details['ingredients'])) selected @endif>
@@ -112,10 +117,23 @@
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="px-4 py-2 border-t border-t-gray-500 flex justify-end items-center space-x-4">
-                                <button class="btn btn-warning" type="button"
-                                    onclick="closeModal('modal{{ $id }}')">Cancel</button>
-                                <input class="btn" type="submit" value="Confirm">
+                            <div
+                                class="px-4 py-2 border-t border-t-gray-500 flex items-center justify-between space-x-4">
+                                <div class="flex">
+                                    <button class="bg-white w-10 h-10 flex rounded-full" data-action="decrement2"
+                                        type="button"><i class="fa fa-minus text-blue-500 m-auto"></i></button>
+                                    <input
+                                        class="bg-transparent border-none cursor-default text-center focus:ring-0 w-12 font-bold"
+                                        type="text" name="quantity" id="quantity"
+                                        value="{{ $details['quantity'] }}" readonly>
+                                    <button class="bg-blue-500 w-10 h-10 flex rounded-full" data-action="increment2"
+                                        type="button"><i class="fa fa-plus text-white m-auto"></i></button>
+                                </div>
+                                <div>
+                                    <button class="btn btn-warning" type="button"
+                                        onclick="closeModal('modal{{ $id }}')">Cancel</button>
+                                    <input class="btn" type="submit" value="Confirm">
+                                </div>
                                 </form>
                             </div>
                         </div>
@@ -141,7 +159,7 @@
                     <div class="flex justify-between items-center dark:text-white pb-1">
                         <p>Name:</p>
                         <input class="bg-transparent" type="text" name="guest_name" id="guest_name"
-                            value="{{ Auth::user()->person->first_name }}">
+                            value="{{ Auth::user()->name }}">
                     </div>
                     <div class="flex justify-between items-center dark:text-white pb-1">
                         <p>Adress:</p>
@@ -210,4 +228,50 @@
             })
         }
     };
+</script>
+
+<script>
+    function decrement(e) {
+        const btn = e.target.parentNode.parentElement.querySelector([
+            'button[data-action="decrement"]',
+            'button[data-action="decrement2"]'
+        ]);
+        const target = btn.nextElementSibling;
+        let value = Number(target.value);
+        if (value != 1) {
+            value--;
+        }
+        target.value = value;
+    }
+
+    function increment(e) {
+        const btn = e.target.parentNode.parentElement.querySelector([
+            'button[data-action="decrement"]',
+            'button[data-action="decrement2"]'
+        ]);
+        const target = btn.nextElementSibling;
+        let value = Number(target.value);
+        if (value != 10) {
+            value++;
+        }
+        target.value = value;
+    }
+
+    const decrementButtons = document.querySelectorAll([
+        `button[data-action="decrement"]`,
+        `button[data-action="decrement2"]`
+    ]);
+
+    const incrementButtons = document.querySelectorAll([
+        `button[data-action="increment"]`,
+        `button[data-action="increment2"]`
+    ]);
+
+    decrementButtons.forEach(btn => {
+        btn.addEventListener("click", decrement);
+    });
+
+    incrementButtons.forEach(btn => {
+        btn.addEventListener("click", increment);
+    });
 </script>

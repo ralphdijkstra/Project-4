@@ -92,9 +92,13 @@ class PersonController extends Controller
      * @param  \App\Models\Person  $person
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Person $person)
+    public function destroy(Person $person, Request $request)
     {
-        //
+        $user = $person->user();
+        $user->delete();
+        $person->delete();
+
+        return redirect()->route('persons.index');
     }
 
     public function assignrole(Person $person, Role $role)
