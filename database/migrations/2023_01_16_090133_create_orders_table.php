@@ -13,6 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::create('order_status', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+        });
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained();
@@ -31,11 +36,6 @@ return new class extends Migration
             $table->decimal('price');
             $table->string('ingredients');
             $table->foreignId('order_id')->constrained();
-            $table->timestamps();
-        });
-        Schema::create('order_status', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
             $table->timestamps();
         });
     }
