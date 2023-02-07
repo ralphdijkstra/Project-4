@@ -4,7 +4,7 @@
 
 
 .btn {
-    @apply font-bold py-2 px-4 rounded bg-blue-500 hover:bg-blue-700 text-white cursor-pointer;
+    @apply font-bold rounded bg-blue-500 hover:bg-blue-700 text-white cursor-pointer p-2;
 }
 
 .btn-warning {

@@ -1,26 +1,25 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Products
+    Units
 @endsection
 
 @section('content')
-    @foreach ($products as $product)
+    @foreach ($units as $unit)
   
 
-    <div class="grid grid-cols-4 mb-1">  
-        {{ $product->name }}
+    <div class="grid grid-cols-4 mb-1">  {{ $unit->name }}
         <div>
-        <a href="{{ route('products.edit', ['product' => $product->id]) }}">
+        <a href="{{ route('units.edit', ['unit' => $unit->id]) }}">
            <input type="submit" class="btn" value="Edit"></a>
-        <a href="{{ route('products.delete', ['id' => $product->id]) }}">
+        <a href="{{ route('units.delete', ['id' => $unit->id]) }}">
            <input type="submit" class="btn btn-warning" value="Delete"></a>
-</div>
+       </div>
     </div>
    
     @endforeach
     <div> 
-    <a href="{{ route('products.create') }}">
+    <a href="{{ route('units.create') }}">
     <input type="submit" class="btn" value="Create"></a>
     </div>
 @endsection

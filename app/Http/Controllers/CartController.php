@@ -89,7 +89,12 @@ class CartController extends Controller
             $collection->push($value);
         }
 
-        session()->put('cart', $collection);
+        if ($collection->isEmpty()) {
+            session()->flush('cart');
+        } else {
+            session()->put('cart', $collection);
+        }
+
 
         return redirect()->back()->with('success', 'Product removed from cart successfully!');
     }
@@ -104,7 +109,8 @@ class CartController extends Controller
         $new_product = [
             "id" => $product->id,
             "name" => $product->name,
-            "quantity" => 1,
+            "description" => $product->description,
+            "quantity" => $request->quantity,
             "price" => $product->price,
             "size" => $request->size,
             "ingredients" => $request->ingredients,
@@ -114,11 +120,12 @@ class CartController extends Controller
 
         foreach (session('cart') as $value) {
             if ($value['name'] == $new_product['name'] && $value['size'] == $new_product['size'] && $value['ingredients'] == $new_product['ingredients']) {
-                $new_quantity = $value['quantity'] + 1;
+                $new_quantity = $value['quantity'] + $request->quantity;
                 $collection->push(
                     [
                         "id" => $value['id'],
                         "name" => $value['name'],
+                        "description" => $value['description'],
                         "quantity" => $new_quantity,
                         "price" => $value['price'],
                         "size" => $value['size'],
@@ -126,14 +133,13 @@ class CartController extends Controller
                     ]
                 );
 
-                session()->put('cart', $collection);
-
-                return redirect()->back()->with('success', 'Product added to cart successfully!');
+                $x = true;
             } else {
                 $collection->push(
                     [
                         "id" => $value['id'],
                         "name" => $value['name'],
+                        "description" => $value['description'],
                         "quantity" => $value['quantity'],
                         "price" => $value['price'],
                         "size" => $value['size'],
@@ -143,7 +149,9 @@ class CartController extends Controller
             }
         }
 
-        $collection->push($new_product);
+        if (!isset($x)) {
+            $collection->push($new_product);
+        }
 
         session()->put('cart', $collection);
 
@@ -160,6 +168,7 @@ class CartController extends Controller
                     [
                         "id" => $value['id'],
                         "name" => $value['name'],
+                        "description" => $value['description'],
                         "quantity" => $value['quantity'] + $request->quantity,
                         "price" => $value['price'],
                         "size" => $value['size'],
@@ -167,12 +176,12 @@ class CartController extends Controller
                     ]
                 );
                 $x = 1;
-            }
-            else if ($key != $request->id) {
+            } else if ($key != $request->id) {
                 $collection->push(
                     [
                         "id" => $value['id'],
                         "name" => $value['name'],
+                        "description" => $value['description'],
                         "quantity" => $value['quantity'],
                         "price" => $value['price'],
                         "size" => $value['size'],
@@ -184,6 +193,7 @@ class CartController extends Controller
                     [
                         "id" => $value['id'],
                         "name" => $value['name'],
+                        "description" => $value['description'],
                         "quantity" => $request->quantity,
                         "price" => $value['price'],
                         "size" => $request->size,
@@ -193,7 +203,7 @@ class CartController extends Controller
             }
         }
 
-        if(isset($x)){
+        if (isset($x)) {
             $collection->forget($request->id);
         }
 

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingredient;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatus;
+use App\Models\PizzaPoint;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +32,7 @@ class OrderController extends Controller
      */
     public function create()
     {
+        // session()->flush('cart');
         return view('order.create');
     }
 
@@ -44,8 +48,11 @@ class OrderController extends Controller
         if (Auth::check()) {
             $user = Auth::user()->id;
             $order->user_id = $user;
-        }
-        else {
+            $pizzapoint = new PizzaPoint();
+            $pizzapoint->person_id = Auth::user()->person->id;
+            $pizzapoint->pizza_points = $request->pizzapoints;
+            $pizzapoint->save();
+        } else {
             $order->guest_name = $request->guest_name;
         }
         $order->address = $request->address;
@@ -55,12 +62,17 @@ class OrderController extends Controller
         $order->save();
 
         foreach (session('cart') as $key => $value) {
+            $product = Product::find($value['id']);
             $orderitem = new OrderItem();
             $orderitem->order_id = $order->id;
             $orderitem->product_id = $value['id'];
             $orderitem->size = $value['size'];
             $orderitem->quantity = $value['quantity'];
             $orderitem->price = $value['price'];
+            foreach ($value['ingredients'] as $key => $ingredient) {
+                $i = Ingredient::find($ingredient);
+                $orderitem->ingredients = $orderitem->ingredients . " " . $i->id;
+            }
             $orderitem->save();
         }
 
@@ -77,9 +89,10 @@ class OrderController extends Controller
      */
     public function show($id)
     {
+        $ingredients = Ingredient::all();
         $order = Order::find($id);
         $orderitems = OrderItem::where('order_id', $id)->get();
-        return view('order.show')->with('order', $order)->with('orderitems', $orderitems);
+        return view('order.show')->with('order', $order)->with('orderitems', $orderitems)->with('ingredients', $ingredients);
     }
 
     /**

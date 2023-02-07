@@ -6,7 +6,7 @@
 
 @section('content')
 <form action="{{ route('products.store') }}" method="POST">
-    @csrf 
+    @csrf
     <div>Name: <input type="text" name="name" id="name" value=""></div>
     @error('name')
     <div class="alert alert-danger">{{ $message }}</div>
@@ -19,7 +19,7 @@
     @error('image')
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror
-    <div>Price: <input type="number" name="price" id="price" value=""></div>
+    <div>Price: <input type="number" name="price" id="price" step="any" value=""></div>
     @error('price')
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror

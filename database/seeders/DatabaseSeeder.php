@@ -42,14 +42,11 @@ class DatabaseSeeder extends Seeder
         $permission = Permission::create(['name' => 'management activiteiten']);
         $role->givePermissionTo($permission);
 
-
-        User::factory(10)->create();
-
         $user = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
-        Person::factory(['first_name' => 'tester', 'last_name' => 'test', 'id' => $user->id])->create();
+        Person::factory(['id' => $user->id])->create();
         // kies klant role (voorbeeld)
         // $role = Role::where('name', 'klant')->first();
         // test user is klant
@@ -63,6 +60,7 @@ class DatabaseSeeder extends Seeder
             IngredientSeeder::class,
             Product_IngredientSeeder::class,
             StatusSeeder::class,
+            UnitSeeder::class,
         ]);
     }
 }

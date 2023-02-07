@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-900">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -6,34 +6,29 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-white" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('menu')" :active="request()->routeIs('menu')">
-                        {{ __('Menu') }}
-                    </x-nav-link>
                     <x-nav-link :href="route('orders.create')" :active="request()->routeIs('orders.create')">
                         {{ __('Order') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
-                        {{ __('Shopping Cart') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('menu')" :active="request()->routeIs('contact')">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('contact')">
                         {{ __('Contact') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('menu')" :active="request()->routeIs('aboutus')">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('aboutus')">
                         {{ __('About Us') }}
                     </x-nav-link>
                 </div>
 
+                @canany(['bestellingen afhandelen', 'manage activiteiten', 'admin'])
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <x-dropdown>
                         <x-slot name="trigger">
                             <button
-                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-red-500 bg-white hover:text-red-700 focus:outline-none transition ease-in-out duration-150">
+                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-red-500 bg-transparent hover:text-red-700 focus:outline-none transition ease-in-out duration-150">
                                 <div>Staff</div>
 
                                 <div class="ml-1">
@@ -48,17 +43,18 @@
                         </x-slot>
                         <x-slot name="content">
                             <x-dropdown-link :href="route('orders.manage')">
-                                {{ __('Orders') }}
+                                {{ __('Manage Orders') }}
                             </x-dropdown-link>
                         </x-slot>
                     </x-dropdown>
                 </div>
-
+                @endcan
+                @canany(['manage activiteiten', 'admin'])
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
                     <x-dropdown>
                         <x-slot name="trigger">
                             <button
-                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-red-500 bg-white hover:text-red-700 focus:outline-none transition ease-in-out duration-150">
+                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-red-500 bg-transparent hover:text-red-700 focus:outline-none transition ease-in-out duration-150">
                                 <div>Manager</div>
 
                                 <div class="ml-1">
@@ -78,12 +74,16 @@
                             <x-dropdown-link :href="route('ingredients.index')">
                                 {{ __('Ingredients') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('products.index')">
+                            <x-dropdown-link :href="route('units.index')">
+                                {{ __('Units') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('persons.index')">
                                 {{ __('Staff') }}
                             </x-dropdown-link>
                         </x-slot>
                     </x-dropdown>
                 </div>
+                @endcan
             </div>
 
             <!-- Settings Dropdown -->
@@ -92,7 +92,7 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
-                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-transparent hover:text-gray-700 dark:text-gray-300 dark:hover:text-white focus:outline-none transition ease-in-out duration-150">
                                 <div>{{ Auth::user()->name }}</div>
 
                                 <div class="ml-1">
@@ -107,11 +107,11 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
                             <x-dropdown-link :href="route('orders.index')">
                                 {{ __('Orders') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Profile') }}
                             </x-dropdown-link>
 
                             <!-- Authentication -->
@@ -128,10 +128,10 @@
                     </x-dropdown>
                 </div>
             @else
-                <div align="right" class="h-[64px] flex items-center">
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                </div>
+            <div align="right" class="h-[64px] items-center md:flex hidden">
+                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+                <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+            </div>
             @endauth
 
             <!-- Hamburger -->
